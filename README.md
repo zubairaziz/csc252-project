@@ -1,1 +1,1 @@
-# csc252-project
+# CSC261-project
