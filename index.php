@@ -1,15 +1,30 @@
 <?php
 
+include 'includes/head.php';
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Office Hours</title>
-</head>
 <body>
-    
+
+<?php
+
+include 'components/navbar.php';
+
+?>
+
+<h1>Welcome</h1>
+
+<?php
+
+include 'components/footer.php';
+
+?>
+
+<?php
+
+include 'includes/scripts.php';
+
+?>
+
 </body>
 </html>

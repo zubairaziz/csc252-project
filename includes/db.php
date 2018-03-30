@@ -1,15 +1,12 @@
 <?php
 
-$db_host     = "localhost"; // Host name
-$db_username = "team24"; // Mysql username
-$db_password = "marketplace"; // Mysql password
-$db_name     = "registration"; // Database name
+$db_host = "localhost"; // Host name
+$db_username = "proj1"; // Mysql username
+$db_password = "proj1"; // Mysql password
+$db_name = "proj1"; // Database name
 
-$connect = mysqli_connect($db_host, $db_username, $db_password, $db_name);
+$connect = new mysqli($db_host, $db_username, $db_password, $db_name);
 
-// Check connection
 if (!$connect) {
     die("Database Connection Failed" . mysqli_error());
 }
-
-?> 

@@ -1,0 +1,13 @@
+nav.navbar ul {
+	list-style-type: none;
+}
+
+nav.navbar ul li {
+	display: inline-block;
+}
+
+nav.navbar ul li a {
+	display: inline-block;
+	font-size: 1.5em;
+	text-decoration: none;
+}

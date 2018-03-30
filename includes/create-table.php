@@ -1,15 +1,15 @@
 <?php 
 
-require_once "/includes/db.php";
+require_once "/includes/functions.php";
 
-echo "CREATE TABLE IF NOT EXISTS Students ()";
+createTable("Users", "");
 
-echo "CREATE TABLE IF NOT EXISTS Professors ()";
+createTable("Professors", "");
 
-echo "CREATE TABLE IF NOT EXISTS Availabilities ()";
+createTable("Availabilities", "");
 
-echo "CREATE TABLE IF NOT EXISTS Courses ()";
+createTable("Courses", "");
 
-echo "CREATE TABLE IF NOT EXISTS  ()";
+createTable("Appointments", "");
 
 ?>
