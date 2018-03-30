@@ -2,29 +2,32 @@
 
 $title = 'Sign Up';
 
-require 'includes/db.php';
+require_once 'includes/db.php';
+require_once 'includes/functions.php';
+check_cookie();
+redirect();
 
-if (isset($_POST['username']) && (isset($_POST['password']) == isset($_POST['password2']))) {
-    $firstname = stripslashes($_POST['firstname']);
-    $lastname = stripslashes($_POST['lastname']);
+if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['password2']))) {
     $email = stripslashes($_POST['email']);
     $unhashedpass = stripslashes($_POST['password']);
     $password = stripslashes(md5($_POST['password']));
-
-    if ($firstname == '' || $lastname == '' || $username == '' || $email == '' || $password == '') {
+    $firstname = stripslashes($_POST['firstname']);
+    $lastname = stripslashes($_POST['lastname']);
+    $status = stripslashes($_POST['status']);
+    if ($firstname == '' || $lastname == '' || $email == '' || $password == '') {
         echo '<div>Your form was missing information.</div>';
-        echo '<a href="register.php">Return to Registration</a>';
+        echo '<a href="signup.php">Return to Registration</a>';
     } elseif (strlen($unhashedpass) < 8) {
         echo '<div>You have submitted an invalid password.</div>';
-        echo '<a href="register.php">Return to Registration</a>';
+        echo '<a href="signup.php">Return to Registration</a>';
     } else {
-        $query = "INSERT INTO Users (firstname, lastname, username, password, email) VALUES ('$firstname', '$lastname', '$username', '$password', '$email')";
-        $usercheck = "SELECT * FROM Users WHERE username='$username'";
+        $query = "INSERT INTO Users (email, password, firstName, lastName, status ) VALUES ('$email', '$password', '$firstname', '$lastname', '$status')";
+        $usercheck = "SELECT * FROM Users WHERE email = '$email'";
         $result = mysqli_query($connect, $usercheck);
         $count = mysqli_num_rows($result);
         if ($count == 1) {
-            echo '<h3>Please use another username<h3>
-            <div class="lead">Click here to <a href="register.php">try again</a></div>';
+            echo '<h3>That email is already in use<h3>
+                <div class="lead">Click here to <a href="signup.php">try again</a></div>';
         } else {
             $result = mysqli_query($connect, $query);
             if ($result) {
@@ -35,51 +38,98 @@ if (isset($_POST['username']) && (isset($_POST['password']) == isset($_POST['pas
             } else {
                 echo '
                 <h3>Failed to register.</h3>
-                <div>Click here to <a href="register.php">try again</a></div>
+                <div>Click here to <a href="signup.php">try again</a></div>
                 ';
             }
         }
     }
-}
+} else {
 
-require 'includes/head.php';
+    require 'includes/head.php';
 
-?>
+    ?>
 
     <body>
 
         <?php
 
-require 'components/navbar.php';
+    require 'components/navbar.php';
 
-?>
+    ?>
 
             <div class="contaier form-grid">
 
                 <form action="" method="POST" name="signup">
                     <h2>Sign Up</h2>
                     <div>
-                            <input type="text" class="" name="firstname" id="firstname" placeholder="First name">
-                            <input type="text" class="" name="lastname" id="lastname" placeholder="Last name">
+                        <input type="text" class="" name="firstname" id="firstname" placeholder="First name">
+                        <input type="text" class="" name="lastname" id="lastname" placeholder="Last name">
                     </div>
-                    <div >
-                            <input type="email" class="span"  name="email" id="email" aria-describedby="emailHelp" placeholder="Email address">
+                    <div>
+                        <input type="email" class="span" name="email" id="email" aria-describedby="emailHelp" placeholder="Email address">
                         <small>We won't share your email with anyone.</small>
                     </div>
                     <div>
-                            <input type="password" class="span" name="password" id="password" placeholder="Desired password">
+                        <input type="password" class="span" name="password" id="password" placeholder="Desired password">
                         <span id="passwordResult"></span>
                         <small>Password must be at least 8 characters long</small>
                         <input type="password" class="span" name="password2" id="password2" placeholder="Verify password">
                     </div>
+                    <div>
+                        <p>Are you a: </p>
+                        <input type="radio" name="status" id="professor" value="1">
+                        <label for="professor">Professor</label>
+                        <div class="reveal-if-active">
+                            <input class="require-if-active" type="text" id="room" name="room" data-require-pair="#professor" placeholder="Room Number">
+                        </div>
+                        <input type="radio" name="status" id="profstudentessor" value="0">
+                        <label for="professor">Student</label>
+                    </div>
+
                     <button type="submit" name="submit">SUBMIT</button>
                 </form>
 
             </div>
             <?php
 
-require 'components/footer.php';
+    require 'components/footer.php';
 
-?>
+    ?>
 
+                <script src="js/jquery.js"></script>
+                <script>
+                    // Enabling room input for professors
+                    var FormStuff = {
+
+                        init: function () {
+                            // kick it off once, in case the radio is already checked when the page loads
+                            this.applyConditionalRequired();
+                            this.bindUIActions();
+                        },
+
+                        bindUIActions: function () {
+                            // when a radio or checkbox changes value, click or otherwise
+                            $("input[type='radio']").on("change", this.applyConditionalRequired);
+                        },
+
+                        applyConditionalRequired: function () {
+                            // find each input that may be hidden or not
+                            $(".require-if-active").each(function () {
+                                var el = $(this);
+                                // find the pairing radio or checkbox
+                                if ($(el.data("require-pair")).is(":checked")) {
+                                    // if its checked, the field should be required
+                                    el.prop("required", true);
+                                } else {
+                                    // otherwise it should not
+                                    el.prop("required", false);
+                                }
+                            });
+                        }
+
+                    };
+
+                    FormStuff.init();
+                </script>
+                <?php }?>
     </body>

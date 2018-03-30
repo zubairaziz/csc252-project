@@ -24,7 +24,12 @@ form {
 }
 
 form input {
-	display: inline-block;
+	font-size: 1.5em;
+	padding: 3px 5px;
+	box-sizing: border-box;
+}
+
+form label {
 	font-size: 1.5em;
 	padding: 3px 5px;
 	box-sizing: border-box;
@@ -42,7 +47,8 @@ form div {
 	margin-bottom: 0.5em;
 }
 
-form input {
+input[type="text"],
+input[type="email"] {
 	width: 100%;
 	min-width: 350px;
 	margin-top: 0.5em;
@@ -55,4 +61,16 @@ form button {
 
 form h2 {
 	text-align: center;
+}
+
+.reveal-if-active {
+	opacity: 0;
+	max-height: 0;
+	overflow: hidden;
+}
+
+input[type="radio"]:checked ~ .reveal-if-active {
+	opacity: 1;
+	max-height: 100px; /* little bit of a magic number :( */
+	overflow: visible;
 }
