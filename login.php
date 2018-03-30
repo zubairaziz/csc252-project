@@ -2,77 +2,81 @@
 
 $title = 'Log In';
 
-require 'includes/db.php';
+require_once 'includes/functions.php';
+check_cookie();
+redirect();
+require_once 'includes/db.php';
 
-if (isset($_POST['username']) && (isset($_POST['password']) == isset($_POST['password2']))) {
-    $firstname = stripslashes($_POST['firstname']);
-    $lastname = stripslashes($_POST['lastname']);
-    $username = stripslashes($_POST['username']);
-    $email = stripslashes($_POST['email']);
-    $unhashedpass = stripslashes($_POST['password']);
-    $password = stripslashes(md5($_POST['password']));
-
-    if ($firstname == '' || $lastname == '' || $username == '' || $email == '' || $password == '') {
-        echo '<div>Your form was missing information.</div>';
-        echo '<a href="register.php">Return to Registration</a>';
-    } elseif (strlen($unhashedpass) < 8) {
-        echo '<div>You have submitted an invalid password.</div>';
-        echo '<a href="register.php">Return to Registration</a>';
-    } else {
-        $query = "INSERT INTO Users (firstname, lastname, username, password, email) VALUES ('$firstname', '$lastname', '$username', '$password', '$email')";
-        $usercheck = "SELECT * FROM Users WHERE username='$username'";
-        $result = mysqli_query($connect, $usercheck);
-        $count = mysqli_num_rows($result);
-        if ($count == 1) {
-            echo '<h3>Please use another username<h3>
-            <div class="lead">Click here to <a href="register.php">try again</a></div>';
-        } else {
-            $result = mysqli_query($connect, $query);
-            if ($result) {
-                echo '
-                <h3>Registered successfully.</h3>
-                <div>Click here to <a href="login.php">login</a></div>
-                ';
-            } else {
-                echo '
-                <h3>Failed to register.</h3>
-                <div>Click here to <a href="register.php">try again</a></div>
-                ';
-            }
-        }
-    }
+if (!isset($_SESSION)) {
+    session_start();
 }
 
-require 'includes/head.php';
+// If form submitted, insert values into the database.
+if (isset($_POST['submit']) and isset($_POST['password'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    //Checking if user exists in the database or not
+    $query = "SELECT * FROM Users WHERE email = '$email' and password = '" . md5($password) . "'";
+    $result = mysqli_query($connect, $query) or die(mysqli_error());
+    $rows = mysqli_num_rows($result);
+    if ($rows == 1) {
+        $_SESSION['email'] = $email;
+        $_SESSION['loggedin'] = true;
 
-?>
+        $profile = mysqli_fetch_assoc($result);
+        $_SESSION['userID'] = $profile['userID'];
+        $_SESSION['firstName'] = $profile['firstName'];
+        $_SESSION['lastName'] = $profile['lastName'];
 
-    <body>
+        if (isset($_POST['remember'])) {
+            //setting the relevant cookies
+            setcookie("email", $email, time() + 86400, "/");
+            setcookie("password", md5($password), time() + 86400, "/");
+        }
+        header("Location: index.php");
+    } else {
+        echo '<div>
+		<h3>Failed to login.</h3>
+		<div class="lead">Incorrect username or password</div>
+		<div class="lead">Click here to <a href="login.php">try again</a></div>
+		</div>';
+    }
+} else {
 
-        <?php
+    require 'includes/head.php';
 
-require 'components/navbar.php';
+    ?>
 
-?>
+	<body>
 
-            <div class="contaier form-grid">
+		<?php
 
-                <form action="" method="POST" name="signup">
-                    <h2>Log In</h2>
-                    <div>
-                            <input type="email" class="" name="email" id="email"  placeholder="Email address">
-                    </div>
-                    <div>
-                            <input type="password" class="" name="password" id="password" placeholder="Password">
-                    </div>
-                    <button type="submit" name="submit">LOGIN</button>
-                </form>
+    require 'components/navbar.php';
 
-            </div>
-            <?php
+    ?>
 
-require 'components/footer.php';
+			<div class="contaier form-grid">
 
-?>
+				<form action="" method="POST" name="signup">
+					<h2>Log In</h2>
+					<div>
+						<input type="email" class="" name="email" id="email" placeholder="Email address">
+					</div>
+					<div>
+						<input type="password" class="" name="password" id="password" placeholder="Password">
+					</div>
+					<div>
+						<input type="checkbox" class="" name="remember" id="remember">
+						<label for="remember">Remember Me</label>
+					</div>
+					<button type="submit" name="submit">LOGIN</button>
+				</form>
 
-    </body>
+			</div>
+			<?php
+
+    require 'components/footer.php';
+
+    ?>
+	</body>
+	<?php }?>

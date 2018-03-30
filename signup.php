@@ -14,6 +14,7 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
     $firstname = stripslashes($_POST['firstname']);
     $lastname = stripslashes($_POST['lastname']);
     $status = stripslashes($_POST['status']);
+    $room = stripslashes($_POST['room']);
     if ($firstname == '' || $lastname == '' || $email == '' || $password == '') {
         echo '<div>Your form was missing information.</div>';
         echo '<a href="signup.php">Return to Registration</a>';
@@ -35,6 +36,8 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
                 <h3>Registered successfully.</h3>
                 <div>Click here to <a href="login.php">login</a></div>
                 ';
+                $profID = "SELECT userID FROM Users WHERE email = '$email'";
+                $query2 = "INSERT INTO ProfRoom (professorID, roomNumber ) VALUES ('$profID', '$room')";
             } else {
                 echo '
                 <h3>Failed to register.</h3>
@@ -131,5 +134,5 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
 
                     FormStuff.init();
                 </script>
-                <?php }?>
     </body>
+    <?php }?>
