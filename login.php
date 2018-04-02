@@ -27,6 +27,7 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
         $_SESSION['userID'] = $profile['userID'];
         $_SESSION['firstName'] = $profile['firstName'];
         $_SESSION['lastName'] = $profile['lastName'];
+        $_SESSION['status'] = $profile['status'];
 
         if (isset($_POST['remember'])) {
             //setting the relevant cookies

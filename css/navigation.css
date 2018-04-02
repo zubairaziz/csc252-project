@@ -2,12 +2,30 @@ nav.navbar ul {
 	list-style-type: none;
 }
 
-nav.navbar ul li {
-	display: inline-block;
+nav.navbar ul li a {
+	display: block;
+	text-decoration: none;
+	padding: 0.3em 0.5em;
 }
 
-nav.navbar ul li a {
-	display: inline-block;
-	font-size: 1.5em;
-	text-decoration: none;
+#title {
+	grid-area: title;
+	justify-self: start;
+	align-self: center;
+}
+
+#login {
+	grid-area: login;
+	align-self: center;
+}
+
+#signup {
+	grid-area: signup;
+	align-self: center;
+}
+
+nav ul {
+	display: grid;
+	grid-template-columns: auto 1fr 1fr auto auto;
+	grid-template-areas: "title . . login signup";
 }
