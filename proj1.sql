@@ -1,22 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2018 at 05:16 PM
--- Server version: 5.7.21-1ubuntu1
--- PHP Version: 7.2.3-1ubuntu1
+-- Generation Time: Apr 02, 2018 at 11:48 PM
+-- Server version: 5.6.38
+-- PHP Version: 7.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `proj1`
@@ -37,7 +29,7 @@ CREATE TABLE `Appointment` (
   `apptID` int(11) NOT NULL,
   `purpose` text NOT NULL,
   `status` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -50,7 +42,17 @@ CREATE TABLE `Availability` (
   `day` int(1) NOT NULL,
   `starts` time DEFAULT NULL,
   `ends` time DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Availability`
+--
+
+INSERT INTO `Availability` (`professorID`, `day`, `starts`, `ends`) VALUES
+(5681, 4, '10:00:00', '11:00:00'),
+(5681, 5, '13:00:00', '14:00:00'),
+(5682, 1, '12:30:00', '14:00:00'),
+(5682, 5, '15:00:00', '16:00:00');
 
 -- --------------------------------------------------------
 
@@ -61,7 +63,17 @@ CREATE TABLE `Availability` (
 CREATE TABLE `Courses` (
   `courseID` varchar(10) NOT NULL,
   `courseName` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Courses`
+--
+
+INSERT INTO `Courses` (`courseID`, `courseName`) VALUES
+('CSC161', 'Intro to Python'),
+('CSC171', 'Intro to Java'),
+('MTH161', 'CalcI'),
+('MTH171', 'CalcII');
 
 -- --------------------------------------------------------
 
@@ -72,7 +84,15 @@ CREATE TABLE `Courses` (
 CREATE TABLE `ProfRoom` (
   `professorID` int(11) NOT NULL,
   `roomNumber` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ProfRoom`
+--
+
+INSERT INTO `ProfRoom` (`professorID`, `roomNumber`) VALUES
+(5681, 'CSC712'),
+(5682, 'Mel312');
 
 -- --------------------------------------------------------
 
@@ -83,7 +103,15 @@ CREATE TABLE `ProfRoom` (
 CREATE TABLE `Teach` (
   `professorID` int(11) NOT NULL,
   `courseID` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Teach`
+--
+
+INSERT INTO `Teach` (`professorID`, `courseID`) VALUES
+(5682, 'CSC161'),
+(5681, 'CSC171');
 
 -- --------------------------------------------------------
 
@@ -97,15 +125,18 @@ CREATE TABLE `Users` (
   `password` varchar(50) NOT NULL,
   `firstName` varchar(25) NOT NULL,
   `lastName` varchar(25) NOT NULL,
-  `status` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Users`
 --
 
 INSERT INTO `Users` (`userID`, `email`, `password`, `firstName`, `lastName`, `status`) VALUES
-(1, 'zabaziz@u.rochester.edu', '5d93ceb70e2bf5daa84ec3d0cd2c731a', 'Zubair', 'Aziz', 0);
+(5679, 'zliang11@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'Zi', 'L', 0),
+(5680, 'za123@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'Zubair', 'A', 0),
+(5681, 'nag98@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'Naven', 'G', 1),
+(5682, 'mpage2@gmail.com', '25d55ad283aa400af464c76d713c07ad', 'Mike', 'Page', 1);
 
 --
 -- Indexes for dumped tables
@@ -164,7 +195,7 @@ ALTER TABLE `Appointment`
 -- AUTO_INCREMENT for table `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5683;
 
 --
 -- Constraints for dumped tables
@@ -174,29 +205,24 @@ ALTER TABLE `Users`
 -- Constraints for table `Appointment`
 --
 ALTER TABLE `Appointment`
-  ADD CONSTRAINT `Appointment_ibfk_1` FOREIGN KEY (`professorID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `Appointment_ibfk_2` FOREIGN KEY (`studentID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE;
+  ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`professorID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`studentID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `Availability`
 --
 ALTER TABLE `Availability`
-  ADD CONSTRAINT `Availability_ibfk_1` FOREIGN KEY (`professorID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE;
+  ADD CONSTRAINT `availability_ibfk_1` FOREIGN KEY (`professorID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `ProfRoom`
 --
 ALTER TABLE `ProfRoom`
-  ADD CONSTRAINT `ProfRoom_ibfk_1` FOREIGN KEY (`professorID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE;
+  ADD CONSTRAINT `profroom_ibfk_1` FOREIGN KEY (`professorID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `Teach`
 --
 ALTER TABLE `Teach`
-  ADD CONSTRAINT `Teach_ibfk_1` FOREIGN KEY (`courseID`) REFERENCES `Courses` (`courseID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `Teach_ibfk_2` FOREIGN KEY (`professorID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  ADD CONSTRAINT `teach_ibfk_1` FOREIGN KEY (`courseID`) REFERENCES `Courses` (`courseID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `teach_ibfk_2` FOREIGN KEY (`professorID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE;

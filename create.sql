@@ -41,7 +41,7 @@ CREATE TABLE Availability(
 CREATE TABLE Appointment(
     professorID INT(11) NOT NULL,
     studentID INT(11) NOT NULL,
-    date DATETIME NOT NULL,
+    date DATE NOT NULL,
     starts TIME NOT NULL,
     ends TIME NOT NULL,
     apptID INT(11) NOT NULL AUTO_INCREMENT,
