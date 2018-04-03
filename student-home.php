@@ -23,11 +23,11 @@
 	<div id=#item2>
 		<h4>Today: </h4>
 		<ul>
-			<li>Professor</li>
-			<li>Date</li>
-			<li>Time</li>
-			<li>Purpose</li>
-			<li>Status</li>
+			<li>Professor: </li>
+			<li>Date: </li>
+			<li>Time: </li>
+			<li>Purpose: </li>
+			<li>Status: </li>
 		</ul>
 	</div>
 </div>

@@ -20,91 +20,49 @@
 		</form>
 	</div>
 	<div>
-		<h4>Availabilities: </h4>
+		<h4>Professor's Availabilities: </h4>
 		<div class="calendar">
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
-			<div>
-				<input type="checkbox" name="" id="">
-			</div>
+			<table>
+				<tr>
+					<th>Week/Day</th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+				</tr>
+				<tr>
+					<th>1</th>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<th>2</th>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<th>3</th>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<th>4</th>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
 		</div>
 	</div>

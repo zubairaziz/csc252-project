@@ -46,17 +46,3 @@ td {
 }
 
 /* CALENDAR */
-.calendar {
-	display: grid;
-	grid-template-columns: repeat(7, 55px);
-	grid-template-rows: auto;
-	grid-gap: 1em;
-	justify-items: center;
-}
-
-.calendar div {
-	display: block;
-	height: 50px;
-	width: 50px;
-	border: 1px solid #000;
-}
