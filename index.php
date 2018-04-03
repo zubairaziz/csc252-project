@@ -1,13 +1,11 @@
 <?php
 
-if (!isset($_SESSION['email'])) {
-    session_start();
-}
 $title = "Home";
-require 'includes/functions.php';
+require_once 'includes/functions.php';
+authenticate();
 check_cookie();
 
-require 'includes/head.php';
+require_once 'includes/head.php';
 
 ?>
 
@@ -27,6 +25,12 @@ require 'components/navbar.php';
 
                 <?php
 
+if (isset($_SESSION['status']) && $_SESSION['status'] == 1) {
+    require_once "professor.php";
+} else {
+    require_once "student.php";
+}
+
 ?>
 
         </div>
@@ -36,6 +40,23 @@ require 'components/navbar.php';
 require 'components/footer.php';
 
 ?>
+
+    <script src="js/jquery.js"></script>
+    <script>
+            showView();
+
+            function showView() {
+                $(document).ready(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo $view ?>.php",
+                        success: function (result) {
+                            $("#view").html(result);
+                        }
+                    });
+                });
+            }
+        </script>
 
             <?php
 

@@ -25,9 +25,16 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
 
         $profile = mysqli_fetch_assoc($result);
         $_SESSION['userID'] = $profile['userID'];
+        $userID = $_SESSION['userID'];
         $_SESSION['firstName'] = $profile['firstName'];
         $_SESSION['lastName'] = $profile['lastName'];
         $_SESSION['status'] = $profile['status'];
+
+        if ($_SESSION['status'] == 1) {
+            $roomQuery = "SELECT roomNumber FROM ProfRoom WHERE professorID = '$userID'";
+            $getRoom = mysqli_query($connect, $roomQuery) or die(mysqli_error());
+            require_once "student.php";
+        }
 
         if (isset($_POST['remember'])) {
             //setting the relevant cookies
@@ -48,36 +55,36 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
 
     ?>
 
-	<body>
+    <body>
 
-		<?php
+        <?php
 
     require 'components/navbar.php';
 
     ?>
 
-			<div class="contaier form-grid">
+            <div class="contaier form-grid">
 
-				<form action="" method="POST" name="signup">
-					<h2>Log In</h2>
-					<div>
-						<input type="email" class="" name="email" id="email" placeholder="Email address">
-					</div>
-					<div>
-						<input type="password" class="" name="password" id="password" placeholder="Password">
-					</div>
-					<div>
-						<input type="checkbox" class="" name="remember" id="remember">
-						<label for="remember">Remember Me</label>
-					</div>
-					<button type="submit" name="submit">LOGIN</button>
-				</form>
+                <form action="" method="POST" name="signup">
+                    <h2>Log In</h2>
+                    <div>
+                        <input type="email" class="" name="email" id="email" placeholder="Email address">
+                    </div>
+                    <div>
+                        <input type="password" class="" name="password" id="password" placeholder="Password">
+                    </div>
+                    <div>
+                        <input type="checkbox" class="" name="remember" id="remember">
+                        <label for="remember">Remember Me</label>
+                    </div>
+                    <button type="submit" name="submit">LOGIN</button>
+                </form>
 
-			</div>
-			<?php
+            </div>
+            <?php
 
     require 'components/footer.php';
 
     ?>
-	</body>
-	<?php }?>
+    </body>
+    <?php }?>

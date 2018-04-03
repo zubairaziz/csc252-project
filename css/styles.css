@@ -11,3 +11,52 @@ body {
 	margin: 0 auto;
 	padding: 0 1em;
 }
+
+table {
+	border: 1px solid #000;
+	border-collapse: collapse;
+	margin: 1em;
+}
+
+tr,
+th,
+td {
+	border: 1px solid #000;
+	padding: 0.5em;
+}
+
+/************************
+	LAYOUT
+*************************/
+
+#item1 {
+	grid-area: item1;
+	justify-self: start;
+}
+
+#item2 {
+	grid-area: item2;
+	justify-self: start;
+}
+
+.dashboard {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-areas: "item1 item2";
+}
+
+/* CALENDAR */
+.calendar {
+	display: grid;
+	grid-template-columns: repeat(7, 55px);
+	grid-template-rows: auto;
+	grid-gap: 1em;
+	justify-items: center;
+}
+
+.calendar div {
+	display: block;
+	height: 50px;
+	width: 50px;
+	border: 1px solid #000;
+}

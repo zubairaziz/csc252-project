@@ -14,18 +14,18 @@ nav.navbar ul li a {
 	align-self: center;
 }
 
-#login {
-	grid-area: login;
+#nav1 {
+	grid-area: nav1;
 	align-self: center;
 }
 
-#signup {
-	grid-area: signup;
+#nav2 {
+	grid-area: nav2;
 	align-self: center;
 }
 
 nav ul {
 	display: grid;
 	grid-template-columns: auto 1fr 1fr auto auto;
-	grid-template-areas: "title . . login signup";
+	grid-template-areas: "title . . nav1 nav2";
 }
