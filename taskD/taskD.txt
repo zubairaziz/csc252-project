@@ -1,0 +1,19 @@
+http://betaweb.csug.rochester.edu/~zliang11/TaskD/show_relations.html
+
+
+Group Number: 25
+
+Zubair Ab Aziz - 106
+Kennedy Agusi - 40
+Zi Qing Liang - 101
+Gazi Mahir Ahmed Naven - 21
+
+
+For this projct, the work was split up between Zubair, Zi, and Naven because Kennedy has an medical emergency
+and is still hospitalized. However he did create a fully functional web based RESTFul Service API for our project.
+Most of Part B implementation was completed by Zubair because of his skills in PHP and HTML whereas Zi and Naven
+helped with the design. Part A was contributed by Zi and Part D was mostly completed by Naven. Part C was contributed
+by both Naven and Zi. Zubair did alot of double checking for this project as well. Kennedy has expressed his regret 
+of not being able to help. We completely understand and wish him to feel better soon. His contribution and skills in
+PHP and HTML shall be helpful for the next Milestone. We are fully aware of his situation and that his health is more
+important. Therefore we hope that he will not receive any penalty.
