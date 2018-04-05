@@ -1,5 +1,14 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS ProfRoom;
+DROP TABLE IF EXISTS Courses;
+DROP TABLE IF EXISTS Teach;
+DROP TABLE IF EXISTS Availability;
+DROP TABLE IF EXISTS Appointment;
+SET FOREIGN_KEY_CHECKS = 1;
+
 CREATE TABLE Users(
-    userID INT(11) NOT NULL AUTO_INCREMENT , 
+    userID INT(11) NOT NULL, 
     email VARCHAR(50) NOT NULL , 
     password VARCHAR(50) NOT NULL , 
     firstName VARCHAR(25) NOT NULL , 
@@ -25,7 +34,7 @@ CREATE TABLE Teach(
     professorID INT(11) NOT NULL,
     courseID VARCHAR(10) NOT NULL,
     PRIMARY KEY(professorID,courseID),
-    FOREIGN KEY(courseID) REFERENCES Courses(courseID) ON DELETE CASCADE,
+    FOREIGN KEY(courseID) REFERENCES Courses(courseID) ON DELETE NO ACTION,
     FOREIGN KEY(professorID) REFERENCES Users(userID) ON DELETE CASCADE
     );
 
@@ -44,12 +53,12 @@ CREATE TABLE Appointment(
     date DATE NOT NULL,
     starts TIME NOT NULL,
     ends TIME NOT NULL,
-    apptID INT(11) NOT NULL AUTO_INCREMENT,
+    apptID INT(11) NOT NULL,
     purpose TEXT NOT NULL,
     status INT(1) NOT NULL,
     PRIMARY KEY(apptID),
     UNIQUE(professorID, studentID, date , starts, ends),
     FOREIGN KEY(professorID) REFERENCES Users(userID) ON DELETE CASCADE,
     FOREIGN KEY(studentID) REFERENCES Users(userID) ON DELETE CASCADE
-);
+	);
 
