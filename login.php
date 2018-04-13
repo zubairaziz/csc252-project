@@ -80,6 +80,9 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
                     <button type="submit" name="submit">LOGIN</button>
                 </form>
 
+                <p>Don't have an account?
+                    <a href="register.php">Sign up now</a>.</p>
+
             </div>
             <?php
 

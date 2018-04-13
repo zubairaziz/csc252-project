@@ -7,7 +7,9 @@ require_once 'includes/functions.php';
 check_cookie();
 redirect();
 
+// Check if required fields are filled
 if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['password2']))) {
+    // Defining variables
     $email = stripslashes($_POST['email']);
     $unhashedpass = stripslashes($_POST['password']);
     $password = stripslashes(md5($_POST['password']));
@@ -18,11 +20,12 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
     if ($firstname == '' || $lastname == '' || $email == '' || $password == '') {
         echo '<div>Your form was missing information.</div>';
         echo '<a href="signup.php">Return to Registration</a>';
-    } elseif (strlen($unhashedpass) < 8) {
+    } elseif (strlen($unhashedpass) < 6) {
         echo '<div>You have submitted an invalid password.</div>';
         echo '<a href="signup.php">Return to Registration</a>';
     } else {
         $query = "INSERT INTO Users (email, password, firstName, lastName, status ) VALUES ('$email', '$password', '$firstname', '$lastname', '$status')";
+        // Validate email
         $usercheck = "SELECT * FROM Users WHERE email = '$email'";
         $result = mysqli_query($connect, $usercheck);
         $count = mysqli_num_rows($result);
@@ -75,7 +78,7 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
                     <div>
                         <input type="password" class="span" name="password" id="password" placeholder="Desired password">
                         <span id="passwordResult"></span>
-                        <small>Password must be at least 8 characters long</small>
+                        <small>Password must be at least 6 characters long</small>
                         <input type="password" class="span" name="password2" id="password2" placeholder="Verify password">
                     </div>
                     <div>
@@ -91,6 +94,9 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
 
                     <button type="submit" name="submit">SUBMIT</button>
                 </form>
+
+                <p>Already have an account?
+                    <a href="login.php">Login here</a>.</p>
 
             </div>
             <?php
