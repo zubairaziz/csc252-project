@@ -93,10 +93,10 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
                     </div>
 
                     <button type="submit" name="submit">SUBMIT</button>
-                </form>
 
-                <p>Already have an account?
+                                    <p>Already have an account?
                     <a href="login.php">Login here</a>.</p>
+                </form>
 
             </div>
             <?php

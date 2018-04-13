@@ -1,0 +1,48 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+	line-height: 1.3em;
+	height: 100%;
+}
+
+.container {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 0 1em;
+}
+
+table {
+	border: 1px solid #000;
+	border-collapse: collapse;
+	margin: 1em;
+}
+
+tr,
+th,
+td {
+	border: 1px solid #000;
+	padding: 0.5em;
+}
+
+/************************
+	LAYOUT
+*************************/
+
+#item1 {
+	grid-area: item1;
+	justify-self: start;
+}
+
+#item2 {
+	grid-area: item2;
+	justify-self: start;
+}
+
+.dashboard {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-areas: "item1 item2";
+}
+
+/* CALENDAR */

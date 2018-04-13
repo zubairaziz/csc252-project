@@ -1,0 +1,72 @@
+form {
+	grid-area: form;
+	justify-self: center;
+	align-self: center;
+}
+
+.form-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 100px;
+	grid-template-areas: " . . ." " . form ." " . . .";
+}
+
+form {
+	border: 2px solid black;
+	padding: 1em 2em;
+	margin: auto;
+	clear: both;
+	max-width: 620px;
+}
+
+form input {
+	font-size: 1.5em;
+	padding: 3px 5px;
+	box-sizing: border-box;
+}
+
+form label {
+	font-size: 1.5em;
+	padding: 3px 5px;
+	box-sizing: border-box;
+}
+
+form small {
+	font-size: 0.7em;
+	color: #5a5a5a;
+	display: block;
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
+form div {
+	margin-bottom: 0.5em;
+}
+
+input[type="text"],
+input[type="email"] {
+	width: 100%;
+	min-width: 350px;
+	margin-top: 0.5em;
+}
+
+form button {
+	font-size: 1.5em;
+	width: 100%;
+}
+
+form h2 {
+	text-align: center;
+}
+
+.reveal-if-active {
+	opacity: 0;
+	max-height: 0;
+	overflow: hidden;
+}
+
+input[type="radio"]:checked ~ .reveal-if-active {
+	opacity: 1;
+	max-height: 100px; /* little bit of a magic number :( */
+	overflow: visible;
+}

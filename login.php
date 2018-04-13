@@ -78,10 +78,10 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
                         <label for="remember">Remember Me</label>
                     </div>
                     <button type="submit" name="submit">LOGIN</button>
-                </form>
 
                 <p>Don't have an account?
-                    <a href="register.php">Sign up now</a>.</p>
+                    <a href="signup.php">Sign up now</a>.</p>
+                </form>
 
             </div>
             <?php

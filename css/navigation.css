@@ -1,0 +1,31 @@
+nav.navbar ul {
+	list-style-type: none;
+}
+
+nav.navbar ul li a {
+	display: block;
+	text-decoration: none;
+	padding: 0.3em 0.5em;
+}
+
+#title {
+	grid-area: title;
+	justify-self: start;
+	align-self: center;
+}
+
+#nav1 {
+	grid-area: nav1;
+	align-self: center;
+}
+
+#nav2 {
+	grid-area: nav2;
+	align-self: center;
+}
+
+nav ul {
+	display: grid;
+	grid-template-columns: auto 1fr 1fr auto auto;
+	grid-template-areas: "title . . nav1 nav2";
+}
