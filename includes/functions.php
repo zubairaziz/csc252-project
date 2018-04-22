@@ -1,5 +1,7 @@
 <?php
 
+require_once "db.php";
+
 function createTable($name, $query)
 {
     mysqli_query($connect, "CREATE TABLE IF NOT EXISTS $name($query)");

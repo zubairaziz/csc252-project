@@ -1,68 +1,100 @@
-<h3>Schedule an Appointment</h3>
-<div>
+<?php
+
+require_once "includes/functions.php";
+
+$email = $_SESSION['email'];
+$date = date('Y/m/d');
+$professor = $_POST['professor'];
+
+// List all profs
+$query = "SELECT * FROM Users WHERE status = 1 ORDER BY firstName";
+$result = mysqli_query($connect, $query);
+$rows = mysqli_num_rows($result);
+
+// Check for today's appointments
+// $query2 = "SELECT * FROM Appointments WHERE studentID = '$email' AND date = '$date' ";
+// $result2 = mysqli_query($connect, $query2);
+// $rows2 = mysqli_num_rows($result2);
+
+?>
+
+	<h3>Schedule an Appointment</h3>
 	<div>
-		<h4>Select: </h4>
-		<form action="" method="POST">
-			<label for="professor">Professor: </label>
-			<Select name="professor">
-				<Option value="1">1</Option>
-				<Option value="2">2</Option>
-				<Option value="3">3</Option>
-				<Option value="4">4</Option>
-			</Select>
-			<label for="professor">Class: </label>
-			<Select name="class">
-				<Option value="1">1</Option>
-				<Option value="2">2</Option>
-				<Option value="3">3</Option>
-				<Option value="4">4</Option>
-			</Select>
-		</form>
-	</div>
-	<div>
-		<h4>Professor's Availabilities: </h4>
-		<div class="calendar">
-			<table>
-				<tr>
-					<th>Week/Day</th>
-					<th>Monday</th>
-					<th>Tuesday</th>
-					<th>Wednesday</th>
-					<th>Thursday</th>
-					<th>Friday</th>
-				</tr>
-				<tr>
-					<th>1</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<th>2</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<th>3</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<th>4</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
+		<div>
+			<h4>Select: </h4>
+			<form action="?view=student-appointment" method="POST">
+				<label for="professor">Professor: </label>
+				<select name="professor">
+					<?php
+while ($row = mysqli_fetch_assoc($result)) {
+    echo '<option value="' . $row['userID'] . '">' . $row['firstName'] . " " . $row['lastName'] . '</option>';
+}
+?>
+				</select>
+				<!-- <label for="class">Class: </label>
+				<Select name="class">
+					<Option value="1">1</Option>
+					<Option value="2">2</Option>
+					<Option value="3">3</Option>
+					<Option value="4">4</Option>
+				</Select> -->
+				<input type="submit" value="See Availabilities">
+			</form>
 		</div>
-	</div>
+
+		<div>
+			<?php if (isset($professor)) {
+    echo "
+			<h4>Professor's Availabilities: </h4>
+			<div class='calendar'>
+				<table>
+					<tr>
+						<th>Week/Day</th>
+						<th>Monday</th>
+						<th>Tuesday</th>
+						<th>Wednesday</th>
+						<th>Thursday</th>
+						<th>Friday</th>
+					</tr>
+					<tr>
+						<th>1</th>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>2</th>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>3</th>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>4</th>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+			";
+} else {
+    echo "
+	<p>Select a professor to see their availabilities.</p>
+	";
+}
+?>
+		</div>
