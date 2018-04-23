@@ -33,16 +33,17 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
                 <div class="lead">Click here to <a href="signup.php">try again</a></div>';
         } else {
             $result = mysqli_query($connect, $query);
+            if ($status == 1) {
+                $getProfID = "SELECT userID FROM Users WHERE email = '$email'";
+                $profID = mysqli_query($connect, $getProfID);
+                $query2 = "INSERT INTO ProfRoom (professorID, roomNumber ) VALUES ('$profID', '$room')";
+                $insertRoom = mysqli_query($connect, $query2);
+            }
             if ($result) {
                 echo '
                 <h3>Registered successfully.</h3>
                 <div>Click here to <a href="login.php">login</a></div>
                 ';
-                if ($status === 1) {
-                    $profID = "SELECT userID FROM Users WHERE email = '$email'";
-                    $query2 = "INSERT INTO ProfRoom (professorID, roomNumber ) VALUES ('$profID', '$room')";
-                    $insertRoom = mysqli_query($connect, $query2);
-                }
             } else {
                 echo '
                 <h3>Failed to register.</h3>
@@ -96,8 +97,8 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
 
                     <button type="submit" name="submit">SUBMIT</button>
 
-                                    <p>Already have an account?
-                    <a href="login.php">Login here</a>.</p>
+                    <p>Already have an account?
+                        <a href="login.php">Login here</a>.</p>
                 </form>
 
             </div>

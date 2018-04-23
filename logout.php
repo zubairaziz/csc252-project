@@ -11,5 +11,3 @@ session_destroy();
 
 // Redirect to home page
 header("index.php");
-
-exit;
