@@ -1,17 +1,18 @@
 <?php
 
-require_once "includes/functions.php";
-
 $email = $_SESSION['email'];
-$date = date('Y/m/d');
+$date = date('Y-m-d');
+
+$checkID = "SELECT userID FROM Users WHERE email = '$email' ";
+$studentID = mysqli_query($connect, $checkID);
 
 // Check for appointments
-$query = "SELECT * FROM Appointments WHERE studentID = '$email' ";
+$query = "SELECT * FROM Appointment WHERE studentID = '$studentID' ";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
 
 // Check for today's appointments
-$query2 = "SELECT * FROM Appointments WHERE studentID = '$email' AND date = '$date' ";
+$query2 = "SELECT * FROM Appointment WHERE studentID = '$email' AND date = '$date' ";
 $result2 = mysqli_query($connect, $query2);
 $rows2 = mysqli_num_rows($result2);
 

@@ -26,9 +26,9 @@ require 'components/navbar.php';
                 <?php
 
 if (isset($_SESSION['status']) && $_SESSION['status'] == 1) {
-    require_once "professor.php";
+    echo "<p>Go to your <a href='professor.php'>Dashboard</a></p>";
 } else {
-    require_once "student.php";
+    echo "<p>Go to your <a href='student.php'>Dashboard</a></p>";
 }
 
 ?>
@@ -40,23 +40,6 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 1) {
 require 'components/footer.php';
 
 ?>
-
-    <script src="js/jquery.js"></script>
-    <script>
-            showView();
-
-            function showView() {
-                $(document).ready(function () {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo $view ?>.php",
-                        success: function (result) {
-                            $("#view").html(result);
-                        }
-                    });
-                });
-            }
-        </script>
 
             <?php
 

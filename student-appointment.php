@@ -11,10 +11,23 @@ $query = "SELECT * FROM Users WHERE status = 1 ORDER BY firstName";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
 
-// Check for today's appointments
-// $query2 = "SELECT * FROM Appointments WHERE studentID = '$email' AND date = '$date' ";
-// $result2 = mysqli_query($connect, $query2);
-// $rows2 = mysqli_num_rows($result2);
+switch ($dayIndex) {
+    case "1":
+        $day = "Monday";
+        break;
+    case "2":
+        $day = "Tuesday";
+        break;
+    case "3":
+        $day = "Wednesday";
+        break;
+    case "4":
+        $day = "Thursday";
+        break;
+    case "5":
+        $day = "Friday";
+        break;
+}
 
 ?>
 
@@ -22,7 +35,7 @@ $rows = mysqli_num_rows($result);
 	<div>
 		<div>
 			<h4>Select: </h4>
-			<form action="?view=student-appointment" method="POST">
+			<form action="<?php $_PHP_SELF?>" method="POST">
 				<label for="professor">Professor: </label>
 				<select name="professor">
 					<?php
@@ -31,19 +44,14 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 ?>
 				</select>
-				<!-- <label for="class">Class: </label>
-				<Select name="class">
-					<Option value="1">1</Option>
-					<Option value="2">2</Option>
-					<Option value="3">3</Option>
-					<Option value="4">4</Option>
-				</Select> -->
+
 				<input type="submit" value="See Availabilities">
 			</form>
 		</div>
 
 		<div>
-			<?php if (isset($professor)) {
+			<?php if (isset($_POST)) {
+    $getAvail = "SELECT * FROM Availability WHERE profID = 1 ORDER BY day";
     echo "
 			<h4>Professor's Availabilities: </h4>
 			<div class='calendar'>
