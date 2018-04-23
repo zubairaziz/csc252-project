@@ -11,6 +11,24 @@ $query = "SELECT * FROM Users WHERE status = 1 ORDER BY firstName";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
 
+switch ($dayIndex) {
+    case "1":
+        $day = "Monday";
+        break;
+    case "2":
+        $day = "Tuesday";
+        break;
+    case "3":
+        $day = "Wednesday";
+        break;
+    case "4":
+        $day = "Thursday";
+        break;
+    case "5":
+        $day = "Friday";
+        break;
+}
+
 ?>
 
 	<h3>Schedule an Appointment</h3>
@@ -26,19 +44,14 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 ?>
 				</select>
-				<!-- <label for="class">Class: </label>
-				<Select name="class">
-					<Option value="1">1</Option>
-					<Option value="2">2</Option>
-					<Option value="3">3</Option>
-					<Option value="4">4</Option>
-				</Select> -->
+
 				<input type="submit" value="See Availabilities">
 			</form>
 		</div>
 
 		<div>
 			<?php if (isset($_POST)) {
+    $getAvail = "SELECT * FROM Availability WHERE profID = 1 ORDER BY day";
     echo "
 			<h4>Professor's Availabilities: </h4>
 			<div class='calendar'>

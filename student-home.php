@@ -1,7 +1,5 @@
 <?php
 
-require_once "includes/functions.php";
-
 $email = $_SESSION['email'];
 $date = date('Y-m-d');
 

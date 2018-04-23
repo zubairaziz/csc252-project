@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/navigation.css">
     <link rel="stylesheet" href="css/forms.css">
     <title>Office Hours | <?php echo $title ?></title>
-    <!-- <script src="js/jquery.js"></script>
+    <script src="js/jquery.js"></script>
     <script>
             showView();
 
@@ -22,5 +22,5 @@
                     });
                 });
             }
-        </script> -->
+        </script>
 </head>
