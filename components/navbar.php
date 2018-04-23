@@ -11,7 +11,7 @@
          <a href="#">LINK</a>
      </li>
      <li id="nav2">
-         <a href="includes/logout.php">Log Out</a>
+         <a href="logout.php">Log Out</a>
      </li>';
 } else {
     echo '

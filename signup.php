@@ -38,8 +38,11 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
                 <h3>Registered successfully.</h3>
                 <div>Click here to <a href="login.php">login</a></div>
                 ';
-                $profID = "SELECT userID FROM Users WHERE email = '$email'";
-                $query2 = "INSERT INTO ProfRoom (professorID, roomNumber ) VALUES ('$profID', '$room')";
+                if ($status === 1) {
+                    $profID = "SELECT userID FROM Users WHERE email = '$email'";
+                    $query2 = "INSERT INTO ProfRoom (professorID, roomNumber ) VALUES ('$profID', '$room')";
+                    $insertRoom = mysqli_query($connect, $query2);
+                }
             } else {
                 echo '
                 <h3>Failed to register.</h3>
