@@ -11,18 +11,13 @@ $query = "SELECT * FROM Users WHERE status = 1 ORDER BY firstName";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
 
-// Check for today's appointments
-// $query2 = "SELECT * FROM Appointments WHERE studentID = '$email' AND date = '$date' ";
-// $result2 = mysqli_query($connect, $query2);
-// $rows2 = mysqli_num_rows($result2);
-
 ?>
 
 	<h3>Schedule an Appointment</h3>
 	<div>
 		<div>
 			<h4>Select: </h4>
-			<form action="?view=student-appointment" method="POST">
+			<form action="<?php $_PHP_SELF?>" method="POST">
 				<label for="professor">Professor: </label>
 				<select name="professor">
 					<?php
@@ -43,7 +38,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 		</div>
 
 		<div>
-			<?php if (isset($professor)) {
+			<?php if (isset($_POST)) {
     echo "
 			<h4>Professor's Availabilities: </h4>
 			<div class='calendar'>
