@@ -22,10 +22,9 @@ switch ($view) {
 }
 
 $title = "Student";
-require_once 'includes/functions.php';
-authenticate();
-check_cookie();
-
+require_once 'includes/db.php';
+require_once 'includes/authenticate.php';
+require_once 'includes/cookie-check.php';
 require_once 'includes/head.php';
 
 ?>

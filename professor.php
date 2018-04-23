@@ -21,8 +21,42 @@ switch ($view) {
         break;
 }
 
+$title = "Student";
+require_once 'includes/db.php';
+require_once 'includes/authenticate.php';
+require_once 'includes/cookie-check.php';
+require_once 'includes/head.php';
+
 ?>
 
-	<section id="view">
+    <body>
 
-	</section>
+        <div class="container">
+
+            <?php
+
+require 'components/navbar.php';
+
+?>
+
+                <section id="view">
+
+                </section>
+
+        </div>
+
+        <?php
+
+require 'components/footer.php';
+
+?>
+
+            <?php
+
+require 'includes/scripts.php';
+
+?>
+
+    </body>
+
+    </html>

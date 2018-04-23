@@ -1,6 +1,6 @@
 <?php
 
-require_once "includes/functions.php";
+require_once "includes/db.php";
 
 $email = $_SESSION['email'];
 $date = date('Y/m/d');
@@ -10,6 +10,12 @@ $professor = $_POST['professor'];
 $query = "SELECT * FROM Users WHERE status = 1 ORDER BY firstName";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
+
+if (isset($_POST)) {
+	$getProfID= "SELECT userID FROM Users WHERE profID = 1 ORDER BY day";
+	$getAvail = "SELECT * FROM Availability WHERE profID = 1 ORDER BY day";
+	$availability = mysqli_query($connect, $getAvail);
+
 
 switch ($dayIndex) {
     case "1":

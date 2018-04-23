@@ -3,9 +3,8 @@
 $title = 'Sign Up';
 
 require_once 'includes/db.php';
-require_once 'includes/functions.php';
-check_cookie();
-redirect();
+require_once 'includes/cookie-check.php';
+require_once 'includes/redirect.php';
 
 // Check if required fields are filled
 if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['password2']))) {

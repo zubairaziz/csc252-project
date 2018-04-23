@@ -2,9 +2,9 @@
 
 $title = 'Log In';
 
-require_once 'includes/functions.php';
-check_cookie();
-redirect();
+require_once 'includes/db.php';
+require_once 'includes/cookie-check.php';
+require_once 'includes/redirect.php';
 require_once 'includes/db.php';
 
 if (!isset($_SESSION)) {
