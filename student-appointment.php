@@ -10,27 +10,28 @@ $professor = $_POST['professor'];
 $query = "SELECT * FROM Users WHERE status = 1 ORDER BY firstName";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
+$row = mysqli_fetch_assoc($result);
+$profID = $data['professorID'];
 
 if (isset($_POST)) {
-	$getProfID= "SELECT userID FROM Users WHERE profID = 1 ORDER BY day";
-	$getAvail = "SELECT * FROM Availability WHERE profID = 1 ORDER BY day";
-	$availability = mysqli_query($connect, $getAvail);
-
+    $getAvail = "SELECT * FROM Availability WHERE profID = 'profID'";
+    $availability = mysqli_query($connect, $getAvail);
+}
 
 switch ($dayIndex) {
-    case "1":
+    case 1:
         $day = "Monday";
         break;
-    case "2":
+    case 2:
         $day = "Tuesday";
         break;
-    case "3":
+    case 3:
         $day = "Wednesday";
         break;
-    case "4":
+    case 4:
         $day = "Thursday";
         break;
-    case "5":
+    case 5:
         $day = "Friday";
         break;
 }
@@ -63,7 +64,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 			<div class='calendar'>
 				<table>
 					<tr>
-						<th>Week/Day</th>
+						<th>Day/Time</th>
 						<th>Monday</th>
 						<th>Tuesday</th>
 						<th>Wednesday</th>
@@ -71,7 +72,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 						<th>Friday</th>
 					</tr>
 					<tr>
-						<th>1</th>
+						<th>Monday</th>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -79,7 +80,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 						<td></td>
 					</tr>
 					<tr>
-						<th>2</th>
+						<th>Tuesday</th>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -87,7 +88,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 						<td></td>
 					</tr>
 					<tr>
-						<th>3</th>
+						<th>Wednesday</th>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -95,7 +96,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 						<td></td>
 					</tr>
 					<tr>
-						<th>4</th>
+						<th>Thursday</th>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -110,5 +111,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 	<p>Select a professor to see their availabilities.</p>
 	";
 }
+
 ?>
 		</div>
