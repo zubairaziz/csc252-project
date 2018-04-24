@@ -4,7 +4,13 @@ body {
 	font-size: 1em;
 	line-height: 1.3em;
 	height: 100%;
+	background-image: url(../css/ur.png);
+	background-color: beige;
+	background-size: 35%;
+	background-repeat: no-repeat;
+	background-position: 380px 50px;
 }
+
 
 .container {
 	max-width: 960px;
