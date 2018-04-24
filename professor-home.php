@@ -14,13 +14,12 @@
 <body>
 <?php
 
-require_once('includes/db.php'); // **
+require_once('includes/db.php'); 
 if(!isset($_SESSION)) { session_start(); } 
 $profID = $_SESSION['userID'];
 //Query
-$sql = "SELECT * FROM appointment WHERE professorID = $profID;";
-
-$result = mysqli_query($connnect, $sql);
+$sql = "SELECT * FROM appointment a, users u WHERE a.professorID = $profID and a.studentID=u.userID;";
+$result = mysqli_query($connect, $sql);
 
 ?>
 <h3>Your Dashboard</h3>
@@ -30,7 +29,8 @@ $result = mysqli_query($connnect, $sql);
         <h4>Curent Appointments: </h4>
         <table>
             <tr>
-                <th>Student</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
@@ -41,7 +41,8 @@ $result = mysqli_query($connnect, $sql);
                 while ($row= mysqli_fetch_assoc($result)) {
             ?>
             <tr>
-                <td><?php echo $row['studentID'] ?> </td>
+                <td><?php echo $row['firstName'] ?> </td>
+                <td><?php echo $row['lastName'] ?> </td>
                 <td><?php echo $row['date'] ?></td>
                 <td><?php echo $row['starts'] ?> </td>
                 <td><?php echo $row['ends'] ?> </td>
