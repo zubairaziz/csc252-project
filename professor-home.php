@@ -5,7 +5,8 @@ if (!isset($_SESSION)) {session_start();}
 $profID = $_SESSION['userID'];
 //Query
 $sql = "SELECT * FROM appointment a, users u WHERE a.professorID = $profID and a.studentID=u.userID;";
-$result = mysqli_query($connect, $sql);
+//gets appointments for professor
+$resultapp = mysqli_query($connect, $sql);
 
 ?>
     <h3>Your Dashboard</h3>
@@ -24,7 +25,7 @@ $result = mysqli_query($connect, $sql);
                     <th>Status</th>
                 </tr>
                 <?php
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($resultapp)) {
     ?>
                     <tr>
                         <td>
@@ -46,17 +47,40 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <?php
 }
 ?>
+
+<?php
+$date = date('Y-m-d');
+$date = (string)$date;
+//getting appointments for today
+require_once 'includes/db.php';
+if (!isset($_SESSION)) {session_start();}
+$profID = $_SESSION['userID'];
+//Query
+$sqltoday = "SELECT * FROM appointment a, users u WHERE a.professorID = $profID and a.studentID=u.userID and date= '$date';";
+$resulttoday = mysqli_query($connect, $sqltoday);
+
+?>
+   
             </table>
         </div>
         <div id=#item2>
-            <h4>Today: </h4>
+            <h4>Today: <?php echo $date ?></h4>
+        <?php 
+       // if($resulttoday->num_rows > 0){
+            while ($row = mysqli_fetch_assoc($resulttoday)) {
+        ?>
             <ul>
-                <li>Student: </li>
-                <li>Date: </li>
-                <li>Start Time: </li>
-                <li>End Time: </li>
-                <li>Purpose: </li>
-                <li>Status: </li>
+                <li>First Name : <?php echo $row['firstName']; ?> </li>
+                <li>Last Name : <?php echo $row['lastName']; ?> </li>
+                <li>Start Time:<?php echo $row['starts']; ?> </li>
+                <li>End Time:<?php echo $row['ends']; ?>  </li>
+                <li>Purpose: <?php echo $row['purpose']; ?> </li>
+                <li>Status:<?php echo $row['status']; ?> </li>
             </ul>
+    <?php }
+        //} else {
+          //  echo "You have no appointments today !";
+        //}
+     ?>        
         </div>
     </div>
