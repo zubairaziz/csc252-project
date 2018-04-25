@@ -31,13 +31,15 @@ require_once 'includes/head.php';
 
     <body>
 
-        <div class="container">
 
             <?php
 
 require 'components/navbar.php';
 
 ?>
+
+  <div class="container">
+
 
                 <section id="view">
 

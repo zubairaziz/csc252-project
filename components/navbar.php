@@ -2,7 +2,7 @@
     <ul>
         <li id="title">
             <a href="index.php">
-                <h1>Home</h1>
+                <h1><img src="images/ur.png" alt="ur logo"></h1>
             </a>
         </li>
 <?php if (isset($_SESSION['email'])) {

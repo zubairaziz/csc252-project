@@ -1,3 +1,13 @@
+nav {
+	background-color: #fff;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+h1 {
+	margin: 0;
+}
+
 nav.navbar ul {
 	list-style-type: none;
 }
@@ -28,4 +38,16 @@ nav ul {
 	display: grid;
 	grid-template-columns: auto 1fr 1fr auto auto;
 	grid-template-areas: "title . . nav1 nav2";
+}
+
+footer {
+	background-color: #fff;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
 }

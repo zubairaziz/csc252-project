@@ -1,16 +1,19 @@
+html {
+	margin: 0;
+}
+
 body {
 	margin: 0;
 	padding: 0;
 	font-size: 1em;
 	line-height: 1.3em;
 	height: 100%;
-	background-image: url(../css/ur.png);
-	background-color: beige;
-	background-size: 35%;
-	background-repeat: no-repeat;
-	background-position: 380px 50px;
+	background-color: #f0f0f0;
 }
 
+#title img {
+	max-width: 200px;
+}
 
 .container {
 	max-width: 960px;
