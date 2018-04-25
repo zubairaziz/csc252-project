@@ -1,7 +1,7 @@
 <h3>
     Professor Availability</h3>
 <form>
-<label for="day">Day: </label>
+    <label for="day">Day: </label>
     <select name="day" id="day">
         <option value="monday">Monday</option>
         <option value="tuesday">Tuesday</option>

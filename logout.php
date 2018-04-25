@@ -10,4 +10,4 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect to home page
-header("index.php");
+header("location: index.php");
