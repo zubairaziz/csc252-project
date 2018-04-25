@@ -32,28 +32,27 @@ require_once 'includes/head.php';
     <body>
 
 
-            <?php
+        <?php
 
 require 'components/navbar.php';
 
 ?>
 
-  <div class="container">
-
+            <div class="container">
 
                 <section id="view">
 
                 </section>
 
-        </div>
+            </div>
 
-        <?php
+            <?php
 
 require 'components/footer.php';
 
 ?>
 
-            <?php
+                <?php
 
 require 'includes/scripts.php';
 
