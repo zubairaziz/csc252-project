@@ -4,12 +4,26 @@ $title = "Availability";
 require_once 'includes/db.php';
 require_once 'includes/authenticate.php';
 require_once 'includes/cookie-check.php';
+$proffesorID = $_SESSION['userID'];
 
 if (!isset($_SESSION)) {
     session_start();
 }
 
 $professorID = $_SESSION['userID'];
+
+if (isset($_POST['submit'])){
+    $day = stripslashes($_POST['day']);
+    $start = stripslashes($_POST['starttime']);
+    $endtime = stripslashes($_POST['endtime']);
+    $insertquery = "INSERT INTO availability VALUES ('$professorID', '$day', '$start', '$endtime')";
+    $queryinsert = mysqli_query($connect,$insertquery);
+    if ($queryinsert) {
+       // echo "<script>alert('Time slot has been added to your availability.');</script>";
+    } else {
+        echo "Sorry, please try again.";
+    }
+}
 
 require_once 'includes/head.php';
 
@@ -28,14 +42,14 @@ require 'components/navbar.php';
 
                 <h3>
                     Professor Availability</h3>
-                <form>
+                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                     <label for="day">Day: </label>
                     <select name="day" id="day">
-                        <option value="monday">Monday</option>
-                        <option value="tuesday">Tuesday</option>
-                        <option value="wednesday">Wednesday</option>
-                        <option value="thursday">Thursday</option>
-                        <option value="friday">Friday</option>
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
                     </select>
                     <br>
                     <label for="starttime">From: </label>
@@ -66,7 +80,7 @@ require 'components/navbar.php';
                         <option value="18:00">6:00 PM</option>
                     </select>
                     <br>
-                    <input type="submit" value="Add Availability">
+                    <input type="submit" name="submit" value="Add Availability">
                 </form>
 
             </div>
