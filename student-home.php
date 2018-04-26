@@ -1,7 +1,9 @@
 <?php
 
 $title = "Dashboard";
-
+if (!isset($_SESSION)) {
+    session_start();
+}
 $date = date('Y-m-d');
 $email = $_SESSION['email'];
 $userID = $_SESSION['userID'];
@@ -15,12 +17,12 @@ if (!isset($_SESSION)) {
 }
 
 // Check for appointments
-$query = "SELECT * FROM Appointment WHERE studentID = '$studentID' ";
+$query = "SELECT * FROM Appointment WHERE studentID = '$userID' ";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
 
 // Check for today's appointments
-$query2 = "SELECT * FROM Appointment WHERE studentID = '$studentID' AND date = '$date' ";
+$query2 = "SELECT * FROM Appointment WHERE studentID = '$userID' AND date = '$date' ";
 $result2 = mysqli_query($connect, $query2);
 $rows2 = mysqli_num_rows($result2);
 
