@@ -33,7 +33,6 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
         if ($_SESSION['status'] == 1) {
             $roomQuery = "SELECT roomNumber FROM ProfRoom WHERE professorID = '$userID'";
             $getRoom = mysqli_query($connect, $roomQuery) or die(mysqli_error());
-            require_once "student.php";
         }
 
         if (isset($_POST['remember'])) {

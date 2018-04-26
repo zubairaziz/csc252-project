@@ -24,9 +24,7 @@ $profID = $_SESSION['userID'];
 $sqltoday = "SELECT * FROM appointment a, users u WHERE a.professorID = $profID and a.studentID=u.userID and date= '$date';";
 $resulttoday = mysqli_query($connect, $sqltoday);
 
-?>
-
-    require_once 'includes/head.php'; ?>
+require_once 'includes/head.php';?>
 
     <body>
 
