@@ -67,7 +67,7 @@ require 'components/navbar.php';
                 <div>
                     <div>
                         <h4>Select: </h4>
-                        <form action="<?php echo htmlspecialchars($_SERVER[" PHP_SELF "]); ?>" method="POST">
+                        <form action="<?php ($_SERVER[" PHP_SELF "]);?>" method="POST">
                             <label for="professor">Professor: </label>
                             <select name="professor">
                                 <?php
@@ -76,7 +76,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 ?>
                             </select>
-                            <input type="submit" name="submit" value="submit">
+                            <input type="submit" name="submit" value="View Availabilities">
                         </form>
                     </div>
 
@@ -88,11 +88,25 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <?php
 
 if ($rows2 > 0) {
-    echo "<ul>";
+    echo "
+    <table>
+    <tr>
+    <th>Day</th>
+    <th>Time</th>
+    <th>Purpose</th>
+    <th>Confirm</th>
+    </tr>
+    ";
 
     while ($row2 = mysqli_fetch_assoc($availability)) {
-        echo "<li>" . $row2['day'] . ": " . $row2['starts'] . "</li>";
-
+        echo
+            "<tr>" .
+            "<td>" . $row2['day'] . "</td>" .
+            "<td>" . $row2['starts'] . " - " . $row2['ends'] . "</td>" .
+            "<td contenteditable style='width: 50%;'></td>" .
+            "<td>" . "<button name='btn_add' id='btn_add'>Add</button>" . "</td>" .
+            "</tr>"
+        ;
     }
 
     echo "</ul>";
