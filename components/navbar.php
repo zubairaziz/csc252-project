@@ -6,10 +6,18 @@
             </a>
         </li>
 <?php if (isset($_SESSION['email'])) {
+    if ($_SESSION['status'] == 1) {
+        echo '
+        <li id="nav1">
+            <a href="professor-home.php">Dashboard</a>
+        </li>';
+    } else {
+        echo '
+        <li id="nav1">
+            <a href="student-home.php">Dashboard</a>
+        </li>';
+    }
     echo '
-     <li id="nav1">
-         <a href="#">LINK</a>
-     </li>
      <li id="nav2">
          <a href="logout.php">Log Out</a>
      </li>';

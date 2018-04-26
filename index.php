@@ -29,7 +29,7 @@ require 'components/navbar.php';
                 <?php
 
 if (isset($_SESSION['status']) && $_SESSION['status'] == 1) {
-    echo "<p>Go to your <a href='professor.php'>Dashboard</a></p>";
+    echo "<p>Go to your <a href='professor-home.php'>Dashboard</a></p>";
     $query = "SELECT * FROM Appointment WHERE professorID = '$userID' AND date = '$date' ";
     $result = mysqli_query($connect, $query);
     $rows = mysqli_num_rows($result);
@@ -52,7 +52,8 @@ if (isset($_SESSION['status']) && $_SESSION['status'] == 1) {
         ";
     }
 } else {
-    echo "<p>Go to your <a href='student.php'>Dashboard</a></p>";
+    echo "<p>Go to your <a href='student-home.php'>Dashboard</a></p>";
+    echo "<p>Today : $date</p>";
     $query = "SELECT * FROM Appointment WHERE studentID = '$userID' AND date = '$date' ";
     $result = mysqli_query($connect, $query);
     $rows = mysqli_num_rows($result);

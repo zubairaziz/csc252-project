@@ -1,8 +1,18 @@
 <?php
 
+$title = "Dashboard";
+
 $date = date('Y-m-d');
 $email = $_SESSION['email'];
-$studentID = $_SESSION['userID'];
+$userID = $_SESSION['userID'];
+
+require_once 'includes/db.php';
+require_once 'includes/authenticate.php';
+require_once 'includes/cookie-check.php';
+
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 // Check for appointments
 $query = "SELECT * FROM Appointment WHERE studentID = '$studentID' ";
@@ -14,15 +24,27 @@ $query2 = "SELECT * FROM Appointment WHERE studentID = '$studentID' AND date = '
 $result2 = mysqli_query($connect, $query2);
 $rows2 = mysqli_num_rows($result2);
 
+require_once 'includes/head.php';
+
 ?>
 
-	<h3>Your Dashboard</h3>
-	<a href="?view=student-appointment">Schedule an appointment</a>
-	<div class="dashboard">
-		<div id=#item1>
-			<h4>Curent Appointments: </h4>
+    <body>
 
-			<?php
+        <?php
+
+require 'components/navbar.php';
+
+?>
+
+            <div class="container">
+
+                <h3>Your Dashboard</h3>
+                <a href="student-appointment.php">Schedule an appointment</a>
+                <div class="dashboard">
+                    <div id=#item1>
+                        <h4>Curent Appointments: </h4>
+
+                        <?php
 
 if ($rows > 0) {
     echo "
@@ -35,14 +57,14 @@ if ($rows > 0) {
 				<th>Status</th>
 			</tr>
 			";
-    while ($data = mysqli_fetch_assoc($result)) {
+    while ($row = mysqli_fetch_assoc($result)) {
         echo "
 				<tr>
-				<td>" . $data['professorID'] . "</td>
-				<td>" . $data['date'] . "</td>
-				<td>" . $data['starts'] . " - " . $data['ends'] . "</td>
-				<td>" . $data['purpose'] . "</td>
-				<td>" . $data['status'] . "</td>
+				<td>" . $row['professorID'] . "</td>
+				<td>" . $row['date'] . "</td>
+				<td>" . $row['starts'] . " - " . $row['ends'] . "</td>
+				<td>" . $row['purpose'] . "</td>
+				<td>" . $row['status'] . "</td>
 			</tr>
 				";
     }
@@ -57,18 +79,18 @@ if ($rows > 0) {
 
 ?>
 
-		</div>
-		<div id=#item2>
-			<h4>Today: </h4>
-			<?php
+                    </div>
+                    <div id=#item2>
+                        <h4>Today: </h4>
+                        <?php
 if ($rows2 > 0) {
-    while ($data2 = mysqli_fetch_array($result2)) {
+    while ($row2 = mysqli_fetch_array($result2)) {
         echo "
 			<ul>
-				<li>Professor: " . $data2['professorID'] . "</li>
-				<li>Time: " . $data2['starts'] . " - " . $data2['ends'] . "</li>
-				<li>Purpose:  " . $data2['purpose'] . "</li>
-				<li>Status:  " . $data2['status'] . "</li>
+				<li>Professor: " . $row2['professorID'] . "</li>
+				<li>Time: " . $row2['starts'] . " - " . $row2['ends'] . "</li>
+				<li>Purpose:  " . $row2['purpose'] . "</li>
+				<li>Status:  " . $row2['status'] . "</li>
 			</ul>
 			";
     }
@@ -78,11 +100,29 @@ if ($rows2 > 0) {
 				";
 }
 ?>
-		</div>
-	</div>
+                    </div>
+                </div>
 
-	<?php
+                <?php
 
 mysqli_free_result($result);
 
 ?>
+
+            </div>
+
+            <?php
+
+require 'components/footer.php';
+
+?>
+
+                <?php
+
+require 'includes/scripts.php';
+
+?>
+
+    </body>
+
+    </html>
