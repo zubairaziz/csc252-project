@@ -27,20 +27,42 @@ if (isset($_POST['submitavail'])){
     }
 }
 
-
-
 require_once 'includes/head.php';
-
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
+
+
+  <link rel="stylesheet" type="text/css" href="../CSS/snack.css">
+  <link rel="stylesheet" type="text/css" href="css/prof.css">
+  <script type="text/javascript" src="js/script.js"></script>
+
+  <script>
+        $(document).ready(function() {
+            getAppointments(<?php echo $_SESSION['userID']; ?>);
+        });
+  </script>
+
+</head>
+
 
     <body>
 
-
         <?php
-
-require 'components/navbar.php';
-
-?>
+          require 'components/navbar.php';
+        ?>
 
             <div class="container">
 
@@ -89,45 +111,12 @@ require 'components/navbar.php';
 
             </div>
 
-        <div class="container">
-
-        <h3> Cancel Availability <h3>
-        <table>
-                <tr>
-                    <th>Day</th>
-                    <th>Time</th>
-                
-                </tr>
-            <?php
-            while ($cancel = mysqli_fetch_assoc($profavail)) {
-            echo
-            "<tr>" .
-            "<td>" . $cancel['day'] . "</td>" .
-            "<td>" . $cancel['starts'] . " - " . $cancel['ends'] . "</td>" .
-            "<td contenteditable style='width: 50%;'></td>" .
-            "<td>" . "<button name='btn_add' id='btn_add'>Add</button>" . "</td>" .
-            "</tr>";
-
-            ?>
-    }
-
-
-    </div>
-
-
-
 <?php
 
 require 'components/footer.php';
-
-?>
-
-<?php
-
 require 'includes/scripts.php';
 
 ?>
+</body>
 
-    </body>
-
-  </html>
+</html>
