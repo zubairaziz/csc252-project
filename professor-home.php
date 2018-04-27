@@ -9,31 +9,48 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$professorID = $_SESSION['userID'];
-//Query
-$sql = "SELECT * FROM appointment a, users u WHERE a.professorID = $professorID and a.studentID=u.userID;";
-//gets appointments for professor
-$resultapp = mysqli_query($connect, $sql);
 
 $date = date('Y-m-d');
 $date = (string) $date;
 
-//getting appointments for today
-$profID = $_SESSION['userID'];
-//Query
-$sqltoday = "SELECT * FROM appointment a, users u WHERE a.professorID = $profID and a.studentID=u.userID and date= '$date';";
-$resulttoday = mysqli_query($connect, $sqltoday);
 
-require_once 'includes/head.php';?>
+require_once 'includes/head.php';
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="../CSS/snack.css">
+  <link rel="stylesheet" type="text/css" href="css/prof.css">
+  <script type="text/javascript" src="js/script.js"></script>
+
+  <script>
+        $(document).ready(function() {
+            getAppointments(<?php echo $_SESSION['userID']; ?>);
+        });
+  </script>
+
+</head>
+
 
     <body>
 
 
         <?php
-
-require 'components/navbar.php';
-
-?>
+          require 'components/navbar.php';
+        ?>
 
             <div class="container">
                 <h3>Your Dashboard</h3>
@@ -41,65 +58,46 @@ require 'components/navbar.php';
                 <div class="dashboard">
                     <div id=#item1>
                         <h4>Curent Appointments: </h4>
-                        <table>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Purpose</th>
-                                <th>Status</th>
-                            </tr>
-                            <?php
-while ($row = mysqli_fetch_assoc($resultapp)) {
-    ?>
-                                <tr>
-                                    <td>
-                                        <?php echo $row['firstName'] ?> </td>
-                                    <td>
-                                        <?php echo $row['lastName'] ?> </td>
-                                    <td>
-                                        <?php echo $row['date'] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row['starts'] ?> </td>
-                                    <td>
-                                        <?php echo $row['ends'] ?> </td>
-                                    <td>
-                                        <?php echo $row['purpose'] ?> </td>
-                                    <td>
-                                        <?php echo $row['status'] ?> </td>
-                                </tr>
-                                <?php
-}
-?>
-                        </table>
+
+
+                        <div class="appointments" id="appointments">
+                        		<div>
+                        		<span class="up_app"><h3>Upcoming Appointments</h3></span>
+                        		</div>
+                        		<br>
+
+                        		<table id="appointment_table">
+                        			<tr id="pet_tr">
+                        				<th id="pet_th">Student Name</th>
+                                <th id="pet_th">Date</th>
+                        				<th id="pet_th">Start Time</th>
+                        				<th id="pet_th">End Time</th>
+                        				<th id="pet_th">Purpose</th>
+                                <th id="pet_th">Status</th>
+                        				<th id="pet_th"></th>
+                        			</tr>
+                              <!-----
+                        			<tr id="schedule_tr">
+                        				<td id="schedule_td">James Mark James</td>
+                                <td id="schedule_td"> 04/25/2018</td>
+                        				<td id="schedule_td"> 23232:222</td>
+                        				<td id="schedule_td">23232:222</td>
+                                <td id="schedule_td"> I need help with my course schedule</td>
+                        				<td id="schedule_td"> Not completed</td>
+                        				<td id="schedule_td"><span class="view_cancelled" onclick="cancelAppointment()" id="view_cn">Cancel</span></td>
+                        			</tr>
+                            -->
+
+                        		</table>
+                         </div>
+
+
                     </div>
                     <div id=#item2>
                         <h4>Today:
                             <?php echo $date ?>
                         </h4>
-                        <?php
-// if($resulttoday->num_rows > 0){
-while ($row = mysqli_fetch_assoc($resulttoday)) {
-    ?>
-                            <ul>
-                                <li>First Name :
-                                    <?php echo $row['firstName']; ?> </li>
-                                <li>Last Name :
-                                    <?php echo $row['lastName']; ?> </li>
-                                <li>Start Time:
-                                    <?php echo $row['starts']; ?> </li>
-                                <li>End Time:
-                                    <?php echo $row['ends']; ?> </li>
-                                <li>Purpose:
-                                    <?php echo $row['purpose']; ?> </li>
-                                <li>Status:
-                                    <?php echo $row['status']; ?> </li>
-                            </ul>
-                            <?php }
-?>
+
                     </div>
                 </div>
             </div>
