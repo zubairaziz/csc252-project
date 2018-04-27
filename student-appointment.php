@@ -103,8 +103,8 @@ if ($rows2 > 0) {
             "<tr>" .
             "<td>" . $row2['day'] . "</td>" .
             "<td>" . $row2['starts'] . " - " . $row2['ends'] . "</td>" .
-            "<td contenteditable style='width: 50%;'></td>" .
-            "<td>" . "<button name='btn_add' id='btn_add'>Add</button>" . "</td>" .
+            "<td id='purpose' contenteditable style='width: 50%;'></td>" .
+            "<td>" . "<button name='btn_add' id='btn_add" . $row2['id'] . "'>Add</button>" . "</td>" .
             "</tr>"
         ;
     }
@@ -127,6 +127,29 @@ require 'components/footer.php';
 require 'includes/scripts.php';
 
 ?>
+
+                            <script>
+                                $(document).on('click', '#btn_add', function () {
+                                    var purpose = $('#purpose').text();
+                                    if (purpose == '') {
+                                        alert("Enter Purpose for Appointment");
+                                        return false;
+                                    }
+                                    $.ajax({
+                                        url: "includes/insert.php",
+                                        method: "POST",
+                                        data: {
+                                            first_name: first_name,
+                                            last_name: last_name
+                                        },
+                                        dataType: "text",
+                                        success: function (data) {
+                                            alert(data);
+                                            fetch_data();
+                                        }
+                                    })
+                                });
+                            </script>
 
     </body>
 
