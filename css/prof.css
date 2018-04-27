@@ -84,7 +84,7 @@ input[type=submit]:hover {
 
 }
 .schedule{
-	display: none;
+	//display: none;
 }
 .pet_signup{
 	display: none;

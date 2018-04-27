@@ -10,24 +10,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$professorID = $_SESSION['userID'];
-$getcancelavail = "SELECT * FROM Availability WHERE professorID=$professorID ORDER BY day ";
-$profavail = mysqli_query($connect, $getcancelavail);
-
-if (isset($_POST['submitavail'])){
-    $day = stripslashes($_POST['day']);
-    $start = stripslashes($_POST['starttime']);
-    $endtime = stripslashes($_POST['endtime']);
-    $insertquery = "INSERT INTO availability VALUES ('$professorID', '$day', '$start', '$endtime')";
-    $queryinsert = mysqli_query($connect,$insertquery);
-    if ($queryinsert) {
-       // echo "<script>alert('Time slot has been added to your availability.');</script>";
-    } else {
-        echo "Sorry, please try again.";
-    }
-}
-
-require_once 'includes/head.php';
+//require_once 'includes/head.php';
 ?>
 
 <!DOCTYPE html>
@@ -45,8 +28,9 @@ require_once 'includes/head.php';
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
 
 
-  <link rel="stylesheet" type="text/css" href="../CSS/snack.css">
   <link rel="stylesheet" type="text/css" href="css/prof.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/navigation.css">
   <script type="text/javascript" src="js/script.js"></script>
 
   <script>
@@ -66,48 +50,37 @@ require_once 'includes/head.php';
 
             <div class="container">
 
-                <h3>
-                    Professor Availability</h3>
-                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                    <label for="day">Day: </label>
-                    <select name="day" id="day">
-                        <option value="1">Monday</option>
-                        <option value="2">Tuesday</option>
-                        <option value="3">Wednesday</option>
-                        <option value="4">Thursday</option>
-                        <option value="5">Friday</option>
-                    </select>
-                    <br>
-                    <label for="starttime">From: </label>
-                    <select name="starttime" id="starttime">
-                        <option value="8:00">8:00 AM</option>
-                        <option value="9:00">9:00 AM</option>
-                        <option value="10:00">10:00 AM</option>
-                        <option value="11:00">11:00 AM</option>
-                        <option value="12:00">12:00 PM</option>
-                        <option value="13:00">1:00 PM</option>
-                        <option value="14:00">2:00 PM</option>
-                        <option value="15:00">3:00 PM</option>
-                        <option value="16:00">4:00 PM</option>
-                        <option value="17:00">5:00 PM</option>
-                    </select>
-                    <br>
-                    <label for="endtime">To: </label>
-                    <select name="endtime" id="endtime">
-                        <option value="9:00">9:00 AM</option>
-                        <option value="10:00">10:00 AM</option>
-                        <option value="11:00">11:00 AM</option>
-                        <option value="12:00">12:00 PM</option>
-                        <option value="13:00">1:00 PM</option>
-                        <option value="14:00">2:00 PM</option>
-                        <option value="15:00">3:00 PM</option>
-                        <option value="16:00">4:00 PM</option>
-                        <option value="17:00">5:00 PM</option>
-                        <option value="18:00">6:00 PM</option>
-                    </select>
-                    <br>
-                    <input type="submit" name="submitavail" value="Add Availability">
-                </form>
+                <h3>Professor Availability</h3>
+                    <div class="schedule" id="schedule">
+                		<form name="schedule_form">
+                		<br>
+                		<table id="schedule_table">
+                			<tr id="pet_tr">
+                				<th id="pet_th"></th>
+                				<th id="pet_th">Mon</th>
+                				<th id="pet_th">Tue</th>
+                				<th id="pet_th">Wed</th>
+                				<th id="pet_th">Thur</th>
+                				<th id="pet_th">Fri</th>
+                			</tr>
+                			<!----
+                			<tr id="schedule_tr">
+                				<td id="schedule_td"><input type="text" name="schedule_time"></td>
+                				<td id="schedule_td"><input type="text" name="schedule_time"></td>
+                				<td id="schedule_td"><input type="text" name="schedule_time"></td>
+                				<td id="schedule_td"><input type="text" name="schedule_time"></td>
+                				<td id="schedule_td"><input type="text" name="schedule_time"></td>
+                			</tr>
+                			---->
+
+                		</table>
+                		<div>
+                			<span id="sub_button" class="sch_bt"><input type="submit" value="Submit" onclick="processSchedule()"></span><span></span>
+                			<span class="sch_bt" onclick="addRow()" id="addmore">Add Row</span>
+                			<p><span class="error" id="submitScheduleErr"></span></p>
+                		</div>
+                		</form>
+                	</div>
 
             </div>
 
