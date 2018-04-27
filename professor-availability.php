@@ -11,8 +11,10 @@ if (!isset($_SESSION)) {
 }
 
 $professorID = $_SESSION['userID'];
+$getcancelavail = "SELECT * FROM Availability WHERE professorID=$professorID ORDER BY day ";
+$profavail = mysqli_query($connect, $getcancelavail);
 
-if (isset($_POST['submit'])){
+if (isset($_POST['submitavail'])){
     $day = stripslashes($_POST['day']);
     $start = stripslashes($_POST['starttime']);
     $endtime = stripslashes($_POST['endtime']);
@@ -24,6 +26,8 @@ if (isset($_POST['submit'])){
         echo "Sorry, please try again.";
     }
 }
+
+
 
 require_once 'includes/head.php';
 
@@ -80,18 +84,45 @@ require 'components/navbar.php';
                         <option value="18:00">6:00 PM</option>
                     </select>
                     <br>
-                    <input type="submit" name="submit" value="Add Availability">
+                    <input type="submit" name="submitavail" value="Add Availability">
                 </form>
 
             </div>
 
+        <div class="container">
+
+        <h3> Cancel Availability <h3>
+        <table>
+                <tr>
+                    <th>Day</th>
+                    <th>Time</th>
+                
+                </tr>
             <?php
+            while ($cancel = mysqli_fetch_assoc($profavail)) {
+            echo
+            "<tr>" .
+            "<td>" . $cancel['day'] . "</td>" .
+            "<td>" . $cancel['starts'] . " - " . $cancel['ends'] . "</td>" .
+            "<td contenteditable style='width: 50%;'></td>" .
+            "<td>" . "<button name='btn_add' id='btn_add'>Add</button>" . "</td>" .
+            "</tr>";
+
+            ?>
+    }
+
+
+    </div>
+
+
+
+<?php
 
 require 'components/footer.php';
 
 ?>
 
-                <?php
+<?php
 
 require 'includes/scripts.php';
 
@@ -99,4 +130,4 @@ require 'includes/scripts.php';
 
     </body>
 
-    </html>
+  </html>
