@@ -35,7 +35,7 @@ if (!isset($_SESSION)) {
 
   <script>
         $(document).ready(function() {
-            getAppointments(<?php echo $_SESSION['userID']; ?>);
+            getAvailibity(<?php echo $_SESSION['userID']; ?>);
         });
   </script>
 

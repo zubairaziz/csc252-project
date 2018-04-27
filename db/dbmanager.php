@@ -14,6 +14,84 @@ if ($type == "cancel") {
   cancelAppointments();
 }
 
+if ($type == "getAvailaibity") {
+  getAvailability();
+}
+
+if ($type == "insertAvailaibity") {
+  insertAvailability();
+}
+
+
+function insertAvailability(){
+    global $conn;
+
+    $response = array();
+    $response["error"] = true;
+
+    $prof = json_decode(file_get_contents('php://input'), true);
+    $profID = $prof["id"];
+    $day = $prof["day"];
+    $starts = $prof["starts"];
+    $ends = $prof["ends"];
+
+    $query = "INSERT INTO availability VALUES(?, ?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ssss", $profID, $day, $starts, $ends);
+    $stmt->execute();
+    $num_affected_rows = $stmt->affected_rows;
+    $stmt->close();
+    if($num_affected_rows > 0){
+			$response["error"] = false;
+			echo json_encode($response);
+		}
+
+		else{
+      $response["error"] = true;
+			echo json_encode($response);
+    }
+
+}
+
+function getAvailability(){
+    global $conn;
+
+    $response = array();
+    $response["error"] = true;
+
+    $obj = json_decode(file_get_contents('php://input'), true);
+    $profID = $obj["id"];
+
+    $query = "SELECT * FROM availability WHERE professorID = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $profID);
+    $stmt->execute();
+		$result = $stmt->get_result();
+    $stmt->close();
+
+    $office_hrs = array();
+    $office_hrs["2"] = array();
+    $office_hrs["3"] = array();
+    $office_hrs["4"] = array();
+    $office_hrs["5"] = array();
+    $office_hrs["6"] = array();
+
+
+    while ($temp = $result->fetch_assoc()) {
+
+			  $response["error"] = false;
+        $day = $temp["day"];
+        $startTime = $temp["starts"];
+        $endTime = $temp["ends"];
+        $time = $startTime ." - " .$endTime;
+		    array_push($office_hrs[$day], $time);
+
+      }
+      
+    $response["office_hrs"] = $office_hrs;
+    echo json_encode($response);
+
+}
 
 function getAppointments(){
     global $conn;
