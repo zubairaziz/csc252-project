@@ -14,7 +14,7 @@ $date = date('Y-m-d');
 $date = (string) $date;
 
 
-require_once 'includes/head.php';
+//require_once 'includes/head.php';
 
 ?>
 <!DOCTYPE html>
@@ -32,8 +32,9 @@ require_once 'includes/head.php';
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
 
 
-	<link rel="stylesheet" type="text/css" href="../CSS/snack.css">
   <link rel="stylesheet" type="text/css" href="css/prof.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/navigation.css">
   <script type="text/javascript" src="js/script.js"></script>
 
   <script>
