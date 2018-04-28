@@ -35,8 +35,16 @@ if (!isset($_SESSION)) {
 
   <script>
         $(document).ready(function() {
-            getAvailibity(<?php echo $_SESSION['userID']; ?>);
+            //getAvailibity(<?php echo $_SESSION['userID']; ?>);
         });
+
+        function processSchedule(){
+        	   $('form').on('submit', function (e) {
+
+        		  e.preventDefault();
+        			submitSchedule(<?php echo $_SESSION['userID']; ?>);
+        	});
+        }
   </script>
 
 </head>
@@ -87,7 +95,6 @@ if (!isset($_SESSION)) {
 <?php
 
 require 'components/footer.php';
-require 'includes/scripts.php';
 
 ?>
 </body>

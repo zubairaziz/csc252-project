@@ -29,18 +29,36 @@ function insertAvailability(){
     $response = array();
     $response["error"] = true;
 
-    $prof = json_decode(file_get_contents('php://input'), true);
-    $profID = $prof["id"];
-    $day = $prof["day"];
-    $starts = $prof["starts"];
-    $ends = $prof["ends"];
+    $obj = json_decode(file_get_contents('php://input'), true);
+    $availaibility = $obj["schedule"];
+    $profID = $obj["profID"];
+    $length = count($availaibility);
+    $keys = array_keys($availaibility);
+    $num_affected_rows = 0;
 
-    $query = "INSERT INTO availability VALUES(?, ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssss", $profID, $day, $starts, $ends);
-    $stmt->execute();
-    $num_affected_rows = $stmt->affected_rows;
+    $conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+
+    for($i = 0; $i<$length; $i++){
+        $day = $availaibility[$keys[$i]];
+
+        foreach($day as $value) {
+            list($start, $end) = explode("-", $value);
+            $start = date('H:i', strtotime($start));
+            $end = date('H:i', strtotime($end));
+
+            $day = $keys[$i];
+            $query = "INSERT INTO availability VALUES(?, ?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("ssss", $profID, $day, $start, $end);
+            $stmt->execute();
+            $num_affected_rows = $stmt->affected_rows;
+        }
+
+    }
+
+
     $stmt->close();
+    $conn->commit();
     if($num_affected_rows > 0){
 			$response["error"] = false;
 			echo json_encode($response);
@@ -87,7 +105,7 @@ function getAvailability(){
 		    array_push($office_hrs[$day], $time);
 
       }
-      
+
     $response["office_hrs"] = $office_hrs;
     echo json_encode($response);
 

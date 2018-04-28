@@ -1,3 +1,4 @@
+
 function addRow(){
 		var table = document.getElementById("schedule_table");
 		var row = table.insertRow(-1);
@@ -303,7 +304,6 @@ function submitSchedule(id){
 	var form_name = document.schedule_form;
 	var form = {};
 	form["id"] = id;
-	var start = form_name.start.value;
 	var check1 = false;
 	var check2 = false;
 
@@ -421,6 +421,7 @@ function submitSchedule(id){
 		if(check1 == true){
 			form["schedule"] = schedule;
       form["what"] = "insertAvailaibity";
+      form["profID"] = id;
 			var form_data = JSON.stringify(form);
 			//alert(form_data);
 
@@ -430,18 +431,18 @@ function submitSchedule(id){
   			url: 'db/dbmanager.php',
   			dataType: "json",
   			data: form_data,
-        success: function(res, textStatus, jqXHR){
-					var error = res.error;
-					if(error == true)
-						$("#submitScheduleErr").html(res.message);
-						//alert("Error " +res.message);
-					else
-						alert("Availability was successfully submitted!");
-						//window.location.replace("account.php");
-					},
-				error: function(jqXHR, textStatus, errorThrown){
-					$("#signupErr").html(errorThrown);
-				}
+  			success: function(res, textStatus, jqXHR){
+  				var error = res.error;
+  				if(error == true)
+  					alert("Availability NOT saved, please try again!");
+  				else{
+  					alert("Availability was successfully saved!");
+  				}
+  			},
+  			error: function(jqXHR, textStatus, errorThrown){
+  				$("#signupErr").html(errorThrown);
+          alert(errorThrown);
+  			}
   		});
 		}
 		else
