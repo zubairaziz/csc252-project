@@ -35,7 +35,7 @@ if (!isset($_SESSION)) {
 
   <script>
         $(document).ready(function() {
-            //getAvailibity(<?php echo $_SESSION['userID']; ?>);
+            getAvailibity(<?php echo $_SESSION['userID']; ?>);
         });
 
         function processSchedule(){
