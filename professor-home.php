@@ -9,49 +9,24 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-
 $date = date('Y-m-d');
 $date = (string) $date;
 
-
-//require_once 'includes/head.php';
+require_once 'includes/head.php';
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
-
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
-
-
-  <link rel="stylesheet" type="text/css" href="css/prof.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/navigation.css">
-  <script type="text/javascript" src="js/script.js"></script>
-
-  <script>
-        $(document).ready(function() {
-            getAppointments(<?php echo $_SESSION['userID']; ?>);
-        });
-  </script>
-
-</head>
-
+        <script>
+            $(document).ready(function () {
+                getAppointments(<?php echo $_SESSION['userID']; ?>);
+            });
+        </script>
 
     <body>
 
-
         <?php
-          require 'components/navbar.php';
-        ?>
+require 'components/navbar.php';
+?>
 
             <div class="container">
                 <h3>Your Dashboard</h3>
@@ -60,24 +35,25 @@ $date = (string) $date;
                     <div id=#item1>
                         <h4>Curent Appointments: </h4>
 
-
                         <div class="appointments" id="appointments">
-                        		<div>
-                        		<span class="up_app"><h3>Upcoming Appointments</h3></span>
-                        		</div>
-                        		<br>
+                            <div>
+                                <span class="up_app">
+                                    <h3>Upcoming Appointments</h3>
+                                </span>
+                            </div>
+                            <br>
 
-                        		<table id="appointment_table">
-                        			<tr id="pet_tr">
-                        				<th id="pet_th">Student Name</th>
-                                <th id="pet_th">Date</th>
-                        				<th id="pet_th">Start Time</th>
-                        				<th id="pet_th">End Time</th>
-                        				<th id="pet_th">Purpose</th>
-                                <th id="pet_th">Status</th>
-                        				<th id="pet_th"></th>
-                        			</tr>
-                              <!-----
+                            <table id="appointment_table">
+                                <tr id="pet_tr">
+                                    <th id="pet_th">Student Name</th>
+                                    <th id="pet_th">Date</th>
+                                    <th id="pet_th">Start Time</th>
+                                    <th id="pet_th">End Time</th>
+                                    <th id="pet_th">Purpose</th>
+                                    <th id="pet_th">Status</th>
+                                    <th id="pet_th"></th>
+                                </tr>
+                                <!-----
                         			<tr id="schedule_tr">
                         				<td id="schedule_td">James Mark James</td>
                                 <td id="schedule_td"> 04/25/2018</td>
@@ -89,8 +65,8 @@ $date = (string) $date;
                         			</tr>
                             -->
 
-                        		</table>
-                         </div>
+                            </table>
+                        </div>
 
 
                     </div>
