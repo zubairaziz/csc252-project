@@ -17,7 +17,6 @@ require_once 'includes/db.php';
 require_once 'includes/authenticate.php';
 require_once 'includes/cookie-check.php';
 
-
 // List all profs
 $query = "SELECT * FROM users WHERE status = 1 ORDER BY firstName";
 $result = mysqli_query($connect, $query);
@@ -81,7 +80,7 @@ if ($rows2 > 0) {
     echo
         "
         <br>
-        <form >
+        <form id='addApt'>
         <h4>Availabilities for " . $firstName . " " . $lastName . "</h4>
         <p>Courses taught: </p>
         <ul>
@@ -93,37 +92,9 @@ if ($rows2 > 0) {
         <select name='start'>
         ";
 
-        while ($row2 = mysqli_fetch_assoc($availability)) {
-            echo
-                '<option id="day" name= "day" value="' . $row2['day'] . '">';
-            switch ($row2['day']) {
-                case 1:
-                    echo "Monday";
-                    break;
-                case 2:
-                    echo "Tuesday";
-                    break;
-                case 3:
-                    echo "Wednesday";
-                    break;
-                case 4:
-                    echo "Thursday";
-                    break;
-                case 5:
-                    echo "Friday";
-                    break;
-                default:
-                    # NULL
-                    break;
-            }
-            echo
-                '</option>'
-            ;
-        }
-/*
     while ($row2 = mysqli_fetch_assoc($availability)) {
         echo
-            '<option value="' . $row2['starts'] . '">';
+            '<option id="day" name= "day" value="' . $row2['day'] . '">';
         switch ($row2['day']) {
             case 1:
                 echo "Monday";
@@ -145,10 +116,38 @@ if ($rows2 > 0) {
                 break;
         }
         echo
-            " - " . $row2['starts'] . '</option>'
+            '</option>'
         ;
     }
-    */
+/*
+while ($row2 = mysqli_fetch_assoc($availability)) {
+echo
+'<option value="' . $row2['starts'] . '">';
+switch ($row2['day']) {
+case 1:
+echo "Monday";
+break;
+case 2:
+echo "Tuesday";
+break;
+case 3:
+echo "Wednesday";
+break;
+case 4:
+echo "Thursday";
+break;
+case 5:
+echo "Friday";
+break;
+default:
+# NULL
+break;
+}
+echo
+" - " . $row2['starts'] . '</option>'
+;
+}
+ */
 
     echo
         "
@@ -189,16 +188,14 @@ require 'includes/scripts.php';
 ?>
 
                             <script>
+                                function processHrs() {
+                                    $('#addApt').on('submit', function (e) {
 
-
-                              function processHrs() {
-                          			$('form').on('submit', function (e) {
-
-                          				e.preventDefault();
-                                  var day = document.getElementById("day").value;
-                          				viewHrs(<?php echo $_SESSION['userID']; ?>, day);
-                          			});
-                          		}
+                                        e.preventDefault();
+                                        var day = document.getElementById("day").value;
+                                        viewHrs(<?php echo $_SESSION['userID']; ?>, day);
+                                    });
+                                }
 
 
                                 $(document).on('click', '#btn_submit', function () {
