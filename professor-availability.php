@@ -35,7 +35,7 @@ require 'components/navbar.php';
 			<div class="container">
 
 				<h3>Professor Availability</h3>
-				<div class="schedule" id="schedule">
+				<div class="schedule form-grid" id="schedule">
 					<form name="schedule_form">
 						<br>
 						<table id="schedule_table">
