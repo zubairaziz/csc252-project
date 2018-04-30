@@ -7,6 +7,7 @@ $date = (string) $date;
 
 $email = $_SESSION['email'];
 $userID = $_SESSION['userID'];
+$studentID = $userID;
 
 require_once 'includes/db.php';
 require_once 'includes/authenticate.php';
@@ -33,10 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 require_once 'includes/head.php';
-
-/* INNER JOIN users ON availability.professorID = users.userID
-INNER JOIN teach ON availability.professorID = teach.professorID
-INNER JOIN courses ON teach.courseID = courses.courseID */
 
 ?>
 
@@ -76,26 +73,24 @@ if ($rows2 > 0) {
     INNER JOIN teach ON users.userID = teach.professorID
     INNER JOIN courses ON teach.courseID = courses.courseID
     WHERE users.userID = $professorID";
-    $profile = mysqli_query($connect, $getProfile);
-
-    while ($profileData = mysqli_fetch_assoc($profile)) {
-        $firstName = $profileData["firstName"];
-        $lastName = $profileData["lastName"];
-    }
-
-    $row2 = mysqli_fetch_assoc($result);
+    $profProfile = mysqli_query($connect, $getProfile);
+    $profileData = mysqli_fetch_assoc($profProfile);
+    $firstName = $profileData["firstName"];
+    $lastName = $profileData["lastName"];
+    $courseName = $profileData["courseName"];
 
     echo
         "
         <br>
         <form action='' method='POST'>
         <h4>Availabilities for " . $firstName . " " . $lastName . "</h4>
-        <select hidden name='$professorID'>
-        </select>
-        <select hidden name='$userID'>
-        </select>
-        <select hidden name='$userID'>
-        </select>
+        <p>Courses taught: </p>
+        <ul>
+        <li>" . $courseName .
+        "</li>
+        </ul>
+        <input type='checkbox' checked hidden name='professorID' value='$professorID'>
+        <input type='checkbox' checked hidden name='studentID' value='$studentID'>
         <select name='start'>
         ";
 
@@ -137,15 +132,17 @@ if ($rows2 > 0) {
         <br>
         <br>
         <label for='purpose'>Purpose: </label>
-        <textarea name='purpose' id='purpose' cols='15' rows='5'></textarea>
+        <input type='text' name='purpose' id='purpose' cols='15' rows='5'>
         <br>
-        <input type='submit' name='appointment' value='Schedule appointment'>
+        <br>
+        <button name='btn_submit' id='btn_submit'>Schedule an appointment</button>
         </form>
         ";
 }
 
 ?>
                     </div>
+
                     <?php
 
 require 'components/footer.php';
@@ -159,18 +156,22 @@ require 'includes/scripts.php';
 ?>
 
                             <script>
-                                $(document).on('click', '#btn_add', function () {
+                                $(document).on('click', '#btn_submit', function () {
                                     var purpose = $('#purpose').text();
-                                    if (purpose == '') {
-                                        alert("Enter Purpose for Appointment");
-                                        return false;
-                                    }
+                                    // if (purpose == '') {
+                                    //     alert("Enter Purpose for Appointment");
+                                    //     return false;
+                                    // }
                                     $.ajax({
-                                        url: "includes/insert.php",
+                                        url: "db/insert-appointment.php",
                                         method: "POST",
                                         data: {
-                                            first_name: first_name,
-                                            last_name: last_name
+                                            professorID: professorID,
+                                            studentID: studentID,
+                                            start: start,
+                                            end: end,
+                                            date: date,
+                                            purpose: purpose
                                         },
                                         dataType: "text",
                                         success: function (data) {

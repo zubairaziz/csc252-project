@@ -2,7 +2,6 @@ form {
 	grid-area: form;
 	justify-self: center;
 	align-self: center;
-	background-color: #fff;
 }
 
 .form-grid {
@@ -13,11 +12,12 @@ form {
 }
 
 form {
-	border: 2px solid black;
+	border: 2px solid #000;
+	background-color: #fff;
 	padding: 1em 2em;
 	margin: auto;
 	clear: both;
-	max-width: 620px;
+	max-width: 1000px;
 }
 
 form input {
