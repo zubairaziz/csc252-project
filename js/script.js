@@ -515,6 +515,10 @@ function submitSchedule(id) {
 					schedule["2"] = [];
 					schedule["2"].push(time);
 				}
+			}else{
+				var time = "";
+				schedule["2"] = [];
+				schedule["2"].push(time);
 			}
 
 			var cell = cells[2];
@@ -533,6 +537,11 @@ function submitSchedule(id) {
 					schedule["3"].push(time);
 				}
 			}
+			else{
+				var time = "";
+				schedule["3"] = [];
+				schedule["3"].push(time);
+			}
 
 			var cell = cells[3];
 			var children = cell.children;
@@ -549,6 +558,10 @@ function submitSchedule(id) {
 					schedule["4"] = [];
 					schedule["4"].push(time);
 				}
+			}else{
+				var time = "";
+				schedule["4"] = [];
+				schedule["4"].push(time);
 			}
 
 			var cell = cells[4];
@@ -566,6 +579,10 @@ function submitSchedule(id) {
 					schedule["5"] = [];
 					schedule["5"].push(time);
 				}
+			}else{
+				var time = "";
+				schedule["5"] = [];
+				schedule["5"].push(time);
 			}
 
 			var cell = cells[5];
@@ -583,6 +600,10 @@ function submitSchedule(id) {
 					schedule["6"] = [];
 					schedule["6"].push(time);
 				}
+			}else{
+				var time = "";
+				schedule["6"] = [];
+				schedule["6"].push(time);
 			}
 		}
 

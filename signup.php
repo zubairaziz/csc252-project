@@ -35,9 +35,22 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
             $result = mysqli_query($connect, $query);
             if ($status == 1) {
                 $getProfID = "SELECT userID FROM users WHERE email = '$email'";
-                $profID = mysqli_query($connect, $getProfID);
+                $result = mysqli_query($connect, $getProfID);
+                $row = mysqli_fetch_array($result);
+                $profID = $row["userID"];
                 $query2 = "INSERT INTO profroom (professorID, roomNumber ) VALUES ('$profID', '$roomNumber')";
                 $insertRoom = mysqli_query($connect, $query2);
+
+                $query = "INSERT INTO availability VALUES($profID, 2, NULL, NULL)";
+                $insertavail = mysqli_query($connect, $query);
+                $query = "INSERT INTO availability VALUES($profID, 3, NULL, NULL)";
+                $insertavail = mysqli_query($connect, $query);
+                $query = "INSERT INTO availability VALUES($profID, 4, NULL, NULL)";
+                $insertavail = mysqli_query($connect, $query);
+                $query = "INSERT INTO availability VALUES($profID, 5, NULL, NULL)";
+                $insertavail = mysqli_query($connect, $query);
+                $query = "INSERT INTO availability VALUES($profID, 6, NULL, NULL)";
+                $insertavail = mysqli_query($connect, $query);
             }
             if ($result) {
                 echo '

@@ -41,16 +41,27 @@ function insertAvailability()
         $day = $availaibility[$keys[$i]];
 
         foreach ($day as $value) {
+          if($value == ""){
+            $day = $keys[$i];
+            $query = "UPDATE availability SET starts = NULL, ends = NULL WHERE professorID = ? AND day = ?";
+            $stmt = $connect->prepare($query);
+            $stmt->bind_param("ss", $profID, $day);
+            $stmt->execute();
+            $num_affected_rows += $stmt->affected_rows;
+          }
+          else{
             list($start, $end) = explode("-", $value);
             $start = date('H:i', strtotime($start));
             $end = date('H:i', strtotime($end));
 
             $day = $keys[$i];
-            $query = "INSERT INTO availability VALUES(?, ?, ?, ?)";
+            $query = "UPDATE availability SET starts = ?, ends = ? WHERE professorID = ? AND day = ?";
             $stmt = $connect->prepare($query);
-            $stmt->bind_param("ssss", $profID, $day, $start, $end);
+            $stmt->bind_param("ssss", $start, $end, $profID, $day);
             $stmt->execute();
-            $num_affected_rows = $stmt->affected_rows;
+            $num_affected_rows += $stmt->affected_rows;
+          }
+
         }
 
     }
