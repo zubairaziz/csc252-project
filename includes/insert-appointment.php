@@ -1,7 +1,7 @@
 <?php
 require_once "db.php";
 $sql = "INSERT INTO appointment(professorID, studentID, date, starts, ends, purpose)
-VALUES('" . $_POST["name"] . "', '" . $_POST["email"] . $_POST["frequency"] . "', '" . $_POST["favorite"] . "')";
+VALUES('" . $_POST["professorID"] . "', '" . $_POST["studentID"] . $_POST["date"] . "', '" . $_POST["starts"] . "', '" . $_POST["ends"] . "', '" . $_POST["purpose"] . "')";
 if (mysqli_query($connect, $sql)) {
-    echo 'Data Inserted';
+    echo 'Appointment Added';
 }

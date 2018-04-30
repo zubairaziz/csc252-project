@@ -3,6 +3,8 @@
 $title = "Dashboard";
 
 $date = date('Y-m-d');
+$date = (string) $date;
+
 $email = $_SESSION['email'];
 $userID = $_SESSION['userID'];
 
@@ -14,42 +16,27 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$professorID = $_POST['professor'];
+$professorID = $_POST['professorID'];
 
 // List all profs
-$query = "SELECT * FROM Users WHERE status = 1 ORDER BY firstName";
+$query = "SELECT * FROM users WHERE status = 1 ORDER BY firstName";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
 
 //Once Prof is selected
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $professorID = $_POST['professor'];
+    $professorID = $_POST['professorID'];
 
-    $getAvail = "SELECT * FROM Availability WHERE professorID = $professorID ORDER BY day";
+    $getAvail = "SELECT * FROM availability WHERE availability.professorID = $professorID ORDER BY day";
     $availability = mysqli_query($connect, $getAvail);
     $rows2 = mysqli_num_rows($availability);
-
-    switch ($row2['day']) {
-        case 1:
-            $day = "Monday";
-            break;
-        case 2:
-            $day = "Tuesday";
-            break;
-        case 3:
-            $day = "Wednesday";
-            break;
-        case 4:
-            $day = "Thursday";
-            break;
-        case 5:
-            $day = "Friday";
-            break;
-    }
-
 }
 
 require_once 'includes/head.php';
+
+/* INNER JOIN users ON availability.professorID = users.userID
+INNER JOIN teach ON availability.professorID = teach.professorID
+INNER JOIN courses ON teach.courseID = courses.courseID */
 
 ?>
 
@@ -68,8 +55,8 @@ require 'components/navbar.php';
                     <div>
                         <h4>Select: </h4>
                         <form action="<?php ($_SERVER[" PHP_SELF "]);?>" method="POST">
-                            <label for="professor">Professor: </label>
-                            <select name="professor">
+                            <label for="professorID">Professor: </label>
+                            <select name="professorID">
                                 <?php
 while ($row = mysqli_fetch_assoc($result)) {
     echo '<option value="' . $row['userID'] . '">' . $row['firstName'] . " " . $row['lastName'] . '</option>';
@@ -80,42 +67,85 @@ while ($row = mysqli_fetch_assoc($result)) {
                         </form>
                     </div>
 
-                    <div id="availability">
-
-                    </div>
-
                     <div>
                         <?php
 
 if ($rows2 > 0) {
-    echo "
-    <table>
-    <tr>
-    <th>Day</th>
-    <th>Time</th>
-    <th>Purpose</th>
-    <th>Confirm</th>
-    </tr>
-    ";
+
+    $getProfile = "SELECT users.firstName, users.lastName, courses.courseName  FROM users
+    INNER JOIN teach ON users.userID = teach.professorID
+    INNER JOIN courses ON teach.courseID = courses.courseID
+    WHERE users.userID = $professorID";
+    $profile = mysqli_query($connect, $getProfile);
+
+    while ($profileData = mysqli_fetch_assoc($profile)) {
+        $firstName = $profileData["firstName"];
+        $lastName = $profileData["lastName"];
+    }
+
+    $row2 = mysqli_fetch_assoc($result);
+
+    echo
+        "
+        <br>
+        <form action='' method='POST'>
+        <h4>Availabilities for " . $firstName . " " . $lastName . "</h4>
+        <select hidden name='$professorID'>
+        </select>
+        <select hidden name='$userID'>
+        </select>
+        <select hidden name='$userID'>
+        </select>
+        <select name='start'>
+        ";
 
     while ($row2 = mysqli_fetch_assoc($availability)) {
         echo
-            "<tr>" .
-            "<td>" . $row2['day'] . "</td>" .
-            "<td>" . $row2['starts'] . " - " . $row2['ends'] . "</td>" .
-            "<td id='purpose' contenteditable style='width: 50%;'></td>" .
-            "<td>" . "<button name='btn_add' id='btn_add" . $row2['id'] . "'>Add</button>" . "</td>" .
-            "</tr>"
+            '<option value="' . $row2['starts'] . '">';
+        switch ($row2['day']) {
+            case 1:
+                echo "Monday";
+                break;
+            case 2:
+                echo "Tuesday";
+                break;
+            case 3:
+                echo "Wednesday";
+                break;
+            case 4:
+                echo "Thursday";
+                break;
+            case 5:
+                echo "Friday";
+                break;
+            default:
+                # NULL
+                break;
+        }
+        echo
+            " - " . $row2['starts'] . '</option>'
         ;
     }
 
-    echo "</ul>";
+    echo
+        "
+        </select>
+        <br>
+        <br>
+        <label for='date'> Select a day that corresponds to availability</label>
+        <input type='date' name='date' id='date'>
+        <br>
+        <br>
+        <label for='purpose'>Purpose: </label>
+        <textarea name='purpose' id='purpose' cols='15' rows='5'></textarea>
+        <br>
+        <input type='submit' name='appointment' value='Schedule appointment'>
+        </form>
+        ";
 }
 
 ?>
-
                     </div>
-
                     <?php
 
 require 'components/footer.php';

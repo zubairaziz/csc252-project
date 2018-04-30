@@ -23,6 +23,11 @@ nav.navbar ul li a {
 	padding: 0.3em 0.5em;
 }
 
+nav.navbar ul li a:hover {
+	color: #154360;
+	text-shadow: 2px 2px 5px #154360;
+}
+
 #title {
 	grid-area: title;
 	justify-self: start;
