@@ -121,7 +121,7 @@ function getAvailability()
 function getAppointments()
 {
     global $connect;
-
+    $todaydate= date('Y-m-d');
     $response = array();
     $response["Appointment"] = array();
     $response["Found"] = false;
@@ -130,9 +130,9 @@ function getAppointments()
     $profID = $obj["id"];
 
     $query = "SELECT a.firstName, a.lastName, b.date, b.starts, b.ends, b.apptID, b.purpose, b.status "
-        . "FROM appointment b INNER JOIN users a on b.studentID = a.userID  WHERE b.professorID = ?";
+        . "FROM appointment b INNER JOIN users a on b.studentID = a.userID  WHERE b.professorID = ? AND b.date >= ?" ;
     $stmt = $connect->prepare($query);
-    $stmt->bind_param("s", $profID);
+    $stmt->bind_param("ss", $profID,$todaydate);
     $stmt->execute();
     $result = $stmt->get_result();
     $stmt->close();

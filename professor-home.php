@@ -33,7 +33,7 @@ require 'components/navbar.php';
 
             <div class="container">
                 <h3>Your Dashboard</h3>
-                <a href="professor-availability.php">Add your availabilities</a>
+                <a href="professor-availability.php">Manage your availabilities</a>
                 <div class="dashboard">
                     <div id=#item1>
                         <h4>Curent Appointments: </h4>
