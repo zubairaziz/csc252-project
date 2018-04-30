@@ -1,16 +1,19 @@
 <?php
 
 $title = "Dashboard";
-require_once 'includes/db.php';
-require_once 'includes/authenticate.php';
-require_once 'includes/cookie-check.php';
-
 if (!isset($_SESSION)) {
     session_start();
 }
 
 $date = date('Y-m-d');
 $date = (string) $date;
+
+$email = $_SESSION['email'];
+$userID = $_SESSION['userID'];
+
+require_once 'includes/db.php';
+require_once 'includes/authenticate.php';
+require_once 'includes/cookie-check.php';
 
 require_once 'includes/head.php';
 

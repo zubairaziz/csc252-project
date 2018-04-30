@@ -350,7 +350,7 @@ function getAppointments(id) {
 		success: function(res, textStatus, jqXHR) {
 			var found = res.Found;
 			if (found == false) {
-				alert("Appointment Not Found");
+				alert("No Appointments Found.");
 			} else {
 				var appointments = res.Appointment;
 				for (var i = 0; i < appointments.length; i++) {
@@ -378,7 +378,7 @@ function getAppointments(id) {
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			alert("An error occured please try again");
+			alert("An error occured. Please try again.");
 			alert(errorThrown);
 		}
 	});
@@ -602,7 +602,7 @@ function submitSchedule(id) {
 				success: function(res, textStatus, jqXHR) {
 					var error = res.error;
 					if (error == true)
-						alert("Availability NOT saved, please try again!");
+						alert("Availability NOT saved. Please try again.");
 					else {
 						alert("Availability was successfully saved!");
 					}
@@ -614,7 +614,8 @@ function submitSchedule(id) {
 			});
 		} else
 			$("#submitScheduleErr").html(
-				"Please enter atleast one office hour"
+				"Please enter at least one office hour."
 			);
-	} else $("#submitScheduleErr").html("Please enter atleast one office hour");
+	} else
+		$("#submitScheduleErr").html("Please enter at least one office hour.");
 }

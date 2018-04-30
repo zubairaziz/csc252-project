@@ -2,6 +2,7 @@ form {
 	grid-area: form;
 	justify-self: center;
 	align-self: center;
+	background-color: #fff;
 }
 
 .form-grid {
@@ -66,4 +67,16 @@ input[type="radio"]:checked ~ .reveal-if-active {
 	opacity: 1;
 	max-height: 100px; /* little bit of a magic number :( */
 	overflow: visible;
+}
+
+#login {
+	background-image: url("../images/bg.JPG");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#signup {
+	background-image: url("../images/bg.JPG");
+	background-size: cover;
+	background-repeat: no-repeat;
 }

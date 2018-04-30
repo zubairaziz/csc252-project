@@ -21,6 +21,10 @@ body {
 	padding: 0 1em;
 }
 
+header {
+	border-radius: 0;
+}
+
 table {
 	border: 1px solid #000;
 	border-collapse: collapse;
@@ -53,5 +57,3 @@ td {
 	grid-template-columns: auto auto;
 	grid-template-areas: "item1 item2";
 }
-
-/* CALENDAR */

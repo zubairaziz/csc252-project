@@ -16,7 +16,7 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     //Checking if user exists in the database or not
-    $query = "SELECT * FROM Users WHERE email = '$email' and password = '" . md5($password) . "'";
+    $query = "SELECT * FROM users WHERE email = '$email' and password = '" . md5($password) . "'";
     $result = mysqli_query($connect, $query) or die(mysqli_error());
     $rows = mysqli_num_rows($result);
     if ($rows == 1) {
@@ -31,7 +31,7 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
         $_SESSION['status'] = $profile['status'];
 
         if ($_SESSION['status'] == 1) {
-            $roomQuery = "SELECT roomNumber FROM ProfRoom WHERE professorID = '$userID'";
+            $roomQuery = "SELECT roomNumber FROM profroom WHERE professorID = '$userID'";
             $getRoom = mysqli_query($connect, $roomQuery) or die(mysqli_error());
         }
 
@@ -54,7 +54,7 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
 
     ?>
 
-    <body>
+    <body id="login">
 
         <?php
 
@@ -83,6 +83,7 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
                 </form>
 
             </div>
+
             <?php
 
     require 'components/footer.php';

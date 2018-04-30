@@ -11,5 +11,5 @@ define('DB_NAME', 'proj1');
 $connect = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 if (!$connect) {
-    die("ERROR: Database connection failed. " . $mysqli->connect_error);
+    die("ERROR: Database connection failed. " . $connect->connect_error);
 }

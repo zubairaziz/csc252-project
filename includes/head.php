@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="css/prof.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/forms.css">
 
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/script.js"></script>

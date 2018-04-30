@@ -15,7 +15,7 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
     $firstname = stripslashes($_POST['firstname']);
     $lastname = stripslashes($_POST['lastname']);
     $status = stripslashes($_POST['status']);
-    $room = stripslashes($_POST['room']);
+    $roomNumber = stripslashes($_POST['room']);
     if ($firstname == '' || $lastname == '' || $email == '' || $password == '') {
         echo '<div>Your form was missing information.</div>';
         echo '<a href="signup.php">Return to Registration</a>';
@@ -23,9 +23,9 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
         echo '<div>You have submitted an invalid password.</div>';
         echo '<a href="signup.php">Return to Registration</a>';
     } else {
-        $query = "INSERT INTO Users (email, password, firstName, lastName, status ) VALUES ('$email', '$password', '$firstname', '$lastname', '$status')";
+        $query = "INSERT INTO users (email, password, firstName, lastName, status ) VALUES ('$email', '$password', '$firstname', '$lastname', '$status')";
         // Validate email
-        $usercheck = "SELECT * FROM Users WHERE email = '$email'";
+        $usercheck = "SELECT * FROM users WHERE email = '$email'";
         $result = mysqli_query($connect, $usercheck);
         $count = mysqli_num_rows($result);
         if ($count == 1) {
@@ -34,9 +34,9 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
         } else {
             $result = mysqli_query($connect, $query);
             if ($status == 1) {
-                $getProfID = "SELECT userID FROM Users WHERE email = '$email'";
+                $getProfID = "SELECT userID FROM users WHERE email = '$email'";
                 $profID = mysqli_query($connect, $getProfID);
-                $query2 = "INSERT INTO ProfRoom (professorID, roomNumber ) VALUES ('$profID', '$room')";
+                $query2 = "INSERT INTO profroom (professorID, roomNumber ) VALUES ('$profID', '$roomNumber')";
                 $insertRoom = mysqli_query($connect, $query2);
             }
             if ($result) {
@@ -58,7 +58,7 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
 
     ?>
 
-    <body>
+    <body id="signup">
 
         <?php
 

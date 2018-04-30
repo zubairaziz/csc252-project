@@ -4,6 +4,11 @@ nav {
 	padding-bottom: 1em;
 }
 
+.navbar {
+	border-radius: 0;
+	border-bottom: 1px solid #154360;
+}
+
 h1 {
 	margin: 0;
 }
@@ -50,4 +55,6 @@ footer {
 	bottom: 0;
 	width: 100%;
 	text-align: center;
+	border-radius: 0;
+	border-top: 1px solid #154360;
 }
