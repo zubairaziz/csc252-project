@@ -21,6 +21,82 @@ if ($type == "insertAvailaibity") {
     insertAvailability();
 }
 
+if($type == "getHrs"){
+  getHrs();
+}
+
+function getHrs(){
+    global $connect;
+
+    $response = array();
+    $response["error"] = true;
+    $obj = json_decode(file_get_contents('php://input'), true);
+    $profID = $obj["profID"];
+    $day = $obj["day"];
+    //$date = $obj["date"];
+
+    $query = "SELECT starts, ends FROM availability WHERE professorID = ? AND day = ?";
+    $stmt = $connect->prepare($query);
+    $stmt->bind_param("sS", $profID, $day);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    $time_array = array();
+
+    while ($temp = $result->fetch_assoc()) {
+        $time = $temp["starts"] . " - " . $temp["ends"];
+        array_push($time_array, $time);
+    }
+    $response["hrs"] = computeTimeIntervals($time_array);
+    echo json_encode($response);
+}
+
+function computeTimeIntervals($time){
+		$computed = array();
+		//convert interval to milli
+		$interval = 15 * 60;
+
+		foreach($time as $value) {
+
+			list($start, $end) = explode("-", $value);
+			//convert time to milli (ie epoch time)
+			$start = strtotime($start);
+			$end = strtotime($end);
+
+			array_push($computed, $start);
+
+			while($start != $end){
+
+				if(($end-$start) > $interval){
+					$start = $start + $interval;
+					array_push($computed, $start);
+				}
+				else{
+					$start = $end;
+				}
+
+			}
+
+		}
+		//sort array
+		sort($computed);
+
+		//convert time to 12hrs format and return
+		return convertTime($computed);
+	}
+
+
+  function convertTime($time){
+		$comp = array();
+		foreach($time as $value) {
+			//convert to 12hrs format
+			$rs = date('h:i A', $value);
+			array_push($comp, $rs);
+		}
+		return $comp;
+	}
+
 function insertAvailability()
 {
     global $connect;

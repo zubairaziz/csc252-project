@@ -1,3 +1,47 @@
+
+function viewHrs(id, day){
+	var form = {};
+	form["what"] = "getHrs";
+	form["profID"] = id;
+	form["day"] = day;
+	var form_data = JSON.stringify(form);
+
+	$.ajax({
+		type: "POST",
+		contentType: "application/json; charset=utf-8",
+		url: "db/dbmanager.php",
+		dataType: "json",
+		data: form_data,
+		success: function(res, textStatus, jqXHR) {
+			var error = res.error;
+			if (error == true){
+				alert("Office hours NOT available");
+			}
+			//alert("Availability NOT Found");
+			else {
+				displayHrs(res.hrs);
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert(errorThrown);
+		}
+	});
+
+}
+
+
+function displayHrs(hrs){
+		var div = document.getElementById("hours");
+
+		for(var i = 0; i<hrs.length; i++){
+			var radio = document.createElement("option");
+			radio.setAttribute("name", "hrs_radio");
+			radio.setAttribute("value", hrs[i]);
+		}
+
+}
+
+
 function addRow() {
 	var table = document.getElementById("schedule_table");
 	var row = table.insertRow(-1);

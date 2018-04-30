@@ -1,5 +1,9 @@
 <?php
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 $title = "Dashboard";
 
 $date = date('Y-m-d');
@@ -13,11 +17,6 @@ require_once 'includes/db.php';
 require_once 'includes/authenticate.php';
 require_once 'includes/cookie-check.php';
 
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-$professorID = $_POST['professorID'];
 
 // List all profs
 $query = "SELECT * FROM users WHERE status = 1 ORDER BY firstName";
@@ -51,7 +50,7 @@ require 'components/navbar.php';
                 <div>
                     <div>
                         <h4>Select: </h4>
-                        <form action="<?php ($_SERVER[" PHP_SELF "]);?>" method="POST">
+                        <form action="" method="POST">
                             <label for="professorID">Professor: </label>
                             <select name="professorID">
                                 <?php
@@ -82,7 +81,7 @@ if ($rows2 > 0) {
     echo
         "
         <br>
-        <form action='' method='POST'>
+        <form >
         <h4>Availabilities for " . $firstName . " " . $lastName . "</h4>
         <p>Courses taught: </p>
         <ul>
@@ -94,6 +93,34 @@ if ($rows2 > 0) {
         <select name='start'>
         ";
 
+        while ($row2 = mysqli_fetch_assoc($availability)) {
+            echo
+                '<option id="day" name= "day" value="' . $row2['day'] . '">';
+            switch ($row2['day']) {
+                case 1:
+                    echo "Monday";
+                    break;
+                case 2:
+                    echo "Tuesday";
+                    break;
+                case 3:
+                    echo "Wednesday";
+                    break;
+                case 4:
+                    echo "Thursday";
+                    break;
+                case 5:
+                    echo "Friday";
+                    break;
+                default:
+                    # NULL
+                    break;
+            }
+            echo
+                '</option>'
+            ;
+        }
+/*
     while ($row2 = mysqli_fetch_assoc($availability)) {
         echo
             '<option value="' . $row2['starts'] . '">';
@@ -121,6 +148,7 @@ if ($rows2 > 0) {
             " - " . $row2['starts'] . '</option>'
         ;
     }
+    */
 
     echo
         "
@@ -131,13 +159,18 @@ if ($rows2 > 0) {
         <input type='date' name='date' id='date'>
         <br>
         <br>
+        <div name='hours'>
+
+        </div>
+        <input type='submit' name='viewhr' value='View Hours' onclick='processHrs()''><br />
         <label for='purpose'>Purpose: </label>
         <input type='text' name='purpose' id='purpose' cols='15' rows='5'>
         <br>
         <br>
-        <button name='btn_submit' id='btn_submit'>Schedule an appointment</button>
+
         </form>
         ";
+
 }
 
 ?>
@@ -156,8 +189,21 @@ require 'includes/scripts.php';
 ?>
 
                             <script>
+
+
+                              function processHrs() {
+                          			$('form').on('submit', function (e) {
+
+                          				e.preventDefault();
+                                  var day = document.getElementById("day").value;
+                          				viewHrs(<?php echo $_SESSION['userID']; ?>, day);
+                          			});
+                          		}
+
+
                                 $(document).on('click', '#btn_submit', function () {
                                     var purpose = $('#purpose').text();
+                                    alert($('day').value());
                                     // if (purpose == '') {
                                     //     alert("Enter Purpose for Appointment");
                                     //     return false;
