@@ -45,12 +45,11 @@ function insertAppointment(){
     $time = date("H:i:s", strtotime($time));
     $end = date("H:i:s", strtotime($end));
     $purpose = $obj["purpose"];
-    $aptID = 53;
     $status = 0;
 
-    $query = "INSERT INTO appointment (professorID, studentID, date, starts, ends, apptID, purpose, status) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO appointment (professorID, studentID, date, starts, ends, purpose, status) values (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $connect->prepare($query);
-    $stmt->bind_param("iisssisi", $profID, $stdID, $date, $time, $end, $aptID, $purpose, $status);
+    $stmt->bind_param("iissssi", $profID, $stdID, $date, $time, $end, $purpose, $status);
     $result = $stmt->execute();
 
     if($result){
