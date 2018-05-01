@@ -25,6 +25,46 @@ if($type == "getHrs"){
   getHrs();
 }
 
+if($type == "insertAppointment"){
+  insertAppointment();
+}
+
+
+function insertAppointment(){
+    global $connect;
+
+    $response = array();
+    $response["error"] = true;
+    $obj = json_decode(file_get_contents('php://input'), true);
+    session_start();
+    $stdID = $_SESSION['userID'];
+    $profID = $_SESSION["profID"];
+    $date = $obj["date"];
+    $time = $obj["time"];
+    $end = date('H:i A',strtotime('+15 minutes',strtotime($time )));
+    $time = date("H:i:s", strtotime($time));
+    $end = date("H:i:s", strtotime($end));
+    $purpose = $obj["purpose"];
+    $aptID = 53;
+    $status = 0;
+
+    $query = "INSERT INTO appointment (professorID, studentID, date, starts, ends, apptID, purpose, status) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $connect->prepare($query);
+    $stmt->bind_param("iisssisi", $profID, $stdID, $date, $time, $end, $aptID, $purpose, $status);
+    $result = $stmt->execute();
+
+    if($result){
+        $response["error"] = false;
+        echo json_encode($response);
+    }
+    else{
+      $response["error"] = true;
+      echo json_encode($response);
+    }
+
+
+}
+
 function getHrs(){
     global $connect;
 
@@ -32,34 +72,39 @@ function getHrs(){
     $response["error"] = true;
     $obj = json_decode(file_get_contents('php://input'), true);
     $profID = $obj["profID"];
-    $day = $obj["day"];
-    //$date = $obj["date"];
+    session_start();
+    if (!isset($_SESSION['profID'])){
+        $_SESSION["profID"] = $profID;
+    }
+
+    $day = $obj["date"];
+
+    $dy = date('w', strtotime($day))+1;
 
     $query = "SELECT starts, ends FROM availability WHERE professorID = ? AND day = ?";
     $stmt = $connect->prepare($query);
-    $stmt->bind_param("sS", $profID, $day);
+    $stmt->bind_param("ss", $profID, $dy);
     $stmt->execute();
     $result = $stmt->get_result();
     $stmt->close();
 
-    $time_array = array();
+    $temp = $result->fetch_assoc();
+    $time = $temp["starts"] ."-" .$temp["ends"];
 
-    while ($temp = $result->fetch_assoc()) {
-        $time = $temp["starts"] . " - " . $temp["ends"];
-        array_push($time_array, $time);
-    }
-    $response["hrs"] = computeTimeIntervals($time_array);
+    $response["hrs"] = computeTimeIntervals($time, $day, $profID);
+
+    //$response["hrs"] = "10AM";
     echo json_encode($response);
 }
 
-function computeTimeIntervals($time){
+function computeTimeIntervals($time, $date, $profID){
 		$computed = array();
 		//convert interval to milli
 		$interval = 15 * 60;
 
-		foreach($time as $value) {
+		//foreach($time as $value) {
 
-			list($start, $end) = explode("-", $value);
+			list($start, $end) = explode("-", $time);
 			//convert time to milli (ie epoch time)
 			$start = strtotime($start);
 			$end = strtotime($end);
@@ -78,21 +123,52 @@ function computeTimeIntervals($time){
 
 			}
 
-		}
+		//}
 		//sort array
 		sort($computed);
 
 		//convert time to 12hrs format and return
-		return convertTime($computed);
+		return convertTime($computed, $date, $profID);
 	}
 
 
-  function convertTime($time){
+  function convertTime($time, $date, $profID){
+    global $connect;
+    $query = "SELECT starts FROM appointment  WHERE professorID = ? AND date = ?";
+    $stmt = $connect->prepare($query);
+    $stmt->bind_param("ss", $profID, $date);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    $found = false;
+    $booked = array();
+    while ($temp = $result->fetch_assoc()) {
+        $found = true;
+        $tt = date('h:i:s a', strtotime($temp["starts"]));
+        array_push($booked, $temp["starts"]);
+    }
+
+
+
 		$comp = array();
 		foreach($time as $value) {
 			//convert to 12hrs format
-			$rs = date('h:i A', $value);
-			array_push($comp, $rs);
+      $rs = date('h:i A', $value);
+      if($found){
+          if (in_array($rs, $booked)) {
+
+          }else{
+            array_push($comp, $rs);
+          }
+      }else{
+        array_push($comp, $rs);
+      }
+
+      //}
+
+
+
 		}
 		return $comp;
 	}

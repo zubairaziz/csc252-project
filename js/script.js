@@ -1,10 +1,12 @@
 
-function viewHrs(id, day){
-	var form = {};
-	form["what"] = "getHrs";
-	form["profID"] = id;
-	form["day"] = day;
-	var form_data = JSON.stringify(form);
+
+function processAppointment(date, time, purpose){
+		var form = {};
+		form["what"] = "insertAppointment";
+		form["date"] = date;
+		form["time"] = time;
+		form["purpose"] = purpose;
+		var form_data = JSON.stringify(form);
 
 	$.ajax({
 		type: "POST",
@@ -15,11 +17,13 @@ function viewHrs(id, day){
 		success: function(res, textStatus, jqXHR) {
 			var error = res.error;
 			if (error == true){
-				alert("Office hours NOT available");
+				//alert(res.msg);
+				alert("Please try again!")
 			}
 			//alert("Availability NOT Found");
 			else {
-				displayHrs(res.hrs);
+				alert("You have successfully scheduled an appointment!");
+
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
@@ -29,14 +33,49 @@ function viewHrs(id, day){
 
 }
 
+function viewHrs(profID, date){
+			var form = {};
+			form["what"] = "getHrs";
+			form["profID"] = profID;
+			form["date"] = date;
+			var form_data = JSON.stringify(form);
+
+			$.ajax({
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				url: "db/dbmanager.php",
+				dataType: "json",
+				data: form_data,
+				success: function(res, textStatus, jqXHR) {
+					var error = res.error;
+					if (error == true){
+						//alert("Office hours NOT available");
+						displayHrs(res.hrs);
+					}
+					//alert("Availability NOT Found");
+					else {
+						displayHrs(res.hrs);
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					alert(errorThrown);
+				}
+			});
+}
+
 
 function displayHrs(hrs){
-		var div = document.getElementById("hours");
-
-		for(var i = 0; i<hrs.length; i++){
+		var div = document.getElementById("select_hrs");
+		//var tm = hrs.split(",");
+		//alert(hrs[1]);
+		var i;
+		for(i = 0; i<hrs.length; i++){
 			var radio = document.createElement("option");
 			radio.setAttribute("name", "hrs_radio");
 			radio.setAttribute("value", hrs[i]);
+			radio.setAttribute("id", "hrs_radio");
+			radio.text = hrs[i];
+			div.add(radio);
 		}
 
 }

@@ -11,6 +11,10 @@ body {
 	background-color: #f0f0f0;
 }
 
+.profHrs{
+	display: none;
+}
+
 #title img {
 	max-width: 200px;
 }
