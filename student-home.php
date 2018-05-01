@@ -40,7 +40,9 @@ require 'components/navbar.php';
             <div class="container">
 
                 <h3>Your Dashboard</h3>
-                <p><a href="student-appointment.php">Schedule an appointment</a></p>
+                <p>
+                    <a href="student-appointment.php">Schedule an appointment</a>
+                </p>
                 <div class="dashboard">
                     <div id=#item1>
                         <h4>Curent Appointments: </h4>
