@@ -16,12 +16,13 @@ require_once 'includes/authenticate.php';
 require_once 'includes/cookie-check.php';
 
 // Check for appointments
-$query = "SELECT * FROM Appointment WHERE studentID = '$userID' ";
+
+$query = "SELECT * FROM appointment INNER JOIN users ON appointment.professorID = users.userID WHERE studentID = $userID";
 $result = mysqli_query($connect, $query);
 $rows = mysqli_num_rows($result);
 
 // Check for today's appointments
-$query2 = "SELECT * FROM Appointment WHERE studentID = '$userID' AND date = '$date' ";
+$query2 = "SELECT * FROM appointment WHERE studentID = '$userID' AND date = '$date' ";
 $result2 = mysqli_query($connect, $query2);
 $rows2 = mysqli_num_rows($result2);
 
@@ -63,7 +64,7 @@ if ($rows > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         echo "
 				<tr>
-				<td>" . $row['professorID'] . "</td>
+				<td>" . $row['firstName'] . $row['lastName'] . "</td>
 				<td>" . $row['date'] . "</td>
 				<td>" . $row['starts'] . " - " . $row['ends'] . "</td>
 				<td>" . $row['purpose'] . "</td>
@@ -99,7 +100,7 @@ if ($rows2 > 0) {
     }
 } else {
     echo "
-				<p>Nothing scheduled for today</p>
+				<p>Nothing yet</p>
 				";
 }
 ?>

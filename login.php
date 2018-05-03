@@ -5,7 +5,6 @@ $title = 'Log In';
 require_once 'includes/db.php';
 require_once 'includes/cookie-check.php';
 require_once 'includes/redirect.php';
-require_once 'includes/db.php';
 
 if (!isset($_SESSION)) {
     session_start();
@@ -64,7 +63,7 @@ if (isset($_POST['submit']) and isset($_POST['password'])) {
 
             <div class="contaier form-grid">
 
-                <form action="" method="POST" name="signup">
+                <form action="" method="POST" name="login">
                     <h2>Log In</h2>
                     <div>
                         <input type="email" class="" name="email" id="email" placeholder="Email address">

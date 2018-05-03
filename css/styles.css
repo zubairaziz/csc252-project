@@ -11,7 +11,7 @@ body {
 	background-color: #f0f0f0;
 }
 
-.profHrs{
+.profHrs {
 	display: none;
 }
 
@@ -22,12 +22,37 @@ body {
 .container {
 	max-width: 960px;
 	margin: 0 auto;
-	padding: 0 1em;
+	padding: 0 0.5em;
 }
 
 header {
 	border-radius: 0;
 }
+
+/************************
+	LAYOUT
+*************************/
+
+/* #item1 {
+	grid-area: item1;
+	justify-self: start;
+}
+
+#item2 {
+	grid-area: item2;
+	justify-self: end;
+	text-align: right;
+}
+
+.dashboard {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	grid-template-areas: "item1 item2";
+} */
+
+/************************
+	DATA TABLES
+*************************/
 
 table {
 	border: 1px solid #000;
@@ -38,40 +63,17 @@ table {
 tr,
 th,
 td {
+	width: auto;
 	border: 1px solid #000;
-	padding: 0.5em;
+	padding: 0.25em;
+	white-space: nowrap;
 }
 
-/************************
-	LAYOUT
-*************************/
-
-#item1 {
-	grid-area: item1;
-	justify-self: start;
+th {
+	color: #fff;
+	background-color: #154360;
 }
 
-#item2 {
-	grid-area: item2;
-	justify-self: start;
-}
-
-.dashboard {
-	display: grid;
-	grid-template-columns: auto auto;
-	grid-template-areas: "item1 item2";
-}
-
-/************************
-	DATA TABLES
-*************************/
-
-table {
-	border-collapse: collapse;
-}
-
-tr,
-th,
 td {
-	border: 1px solid #000;
+	background-color: #fff;
 }

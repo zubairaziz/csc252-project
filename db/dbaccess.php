@@ -2,7 +2,7 @@
 
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'zabaziz');
-define('DB_PASSWORD', 'proj1');
+define('DB_PASSWORD', 'pL53cZ8k');
 define('DB_NAME', 'zabaziz_1');
 
 /* Attempt to connect to MySQL database */
