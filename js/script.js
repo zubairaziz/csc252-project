@@ -1,12 +1,10 @@
-
-
-function processAppointment(date, time, purpose){
-		var form = {};
-		form["what"] = "insertAppointment";
-		form["date"] = date;
-		form["time"] = time;
-		form["purpose"] = purpose;
-		var form_data = JSON.stringify(form);
+function processAppointment(date, time, purpose) {
+	var form = {};
+	form["what"] = "insertAppointment";
+	form["date"] = date;
+	form["time"] = time;
+	form["purpose"] = purpose;
+	var form_data = JSON.stringify(form);
 
 	$.ajax({
 		type: "POST",
@@ -14,9 +12,9 @@ function processAppointment(date, time, purpose){
 		url: "db/dbmanager.php",
 		dataType: "json",
 		data: form_data,
-		success: function(res, textStatus, jqXHR) {
+		success: function (res, textStatus, jqXHR) {
 			var error = res.error;
-			if (error == true){
+			if (error == true) {
 				//alert(res.msg);
 				alert("Please try again!")
 			}
@@ -26,60 +24,59 @@ function processAppointment(date, time, purpose){
 
 			}
 		},
-		error: function(jqXHR, textStatus, errorThrown) {
+		error: function (jqXHR, textStatus, errorThrown) {
 			alert(errorThrown);
 		}
 	});
 
 }
 
-function viewHrs(profID, date){
-			var form = {};
-			form["what"] = "getHrs";
-			form["profID"] = profID;
-			form["date"] = date;
-			var form_data = JSON.stringify(form);
+function viewHrs(profID, date) {
+	var form = {};
+	form["what"] = "getHrs";
+	form["profID"] = profID;
+	form["date"] = date;
+	var form_data = JSON.stringify(form);
 
-			$.ajax({
-				type: "POST",
-				contentType: "application/json; charset=utf-8",
-				url: "db/dbmanager.php",
-				dataType: "json",
-				data: form_data,
-				success: function(res, textStatus, jqXHR) {
-					var error = res.error;
-					if (error == true){
-						//alert("Office hours NOT available");
-						displayHrs(res.hrs);
-					}
-					//alert("Availability NOT Found");
-					else {
-						displayHrs(res.hrs);
-					}
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					alert(errorThrown);
-				}
-			});
-}
-
-
-function displayHrs(hrs){
-		var div = document.getElementById("select_hrs");
-		//var tm = hrs.split(",");
-		//alert(hrs[1]);
-		var i;
-		for(i = 0; i<hrs.length; i++){
-			var radio = document.createElement("option");
-			radio.setAttribute("name", "hrs_radio");
-			radio.setAttribute("value", hrs[i]);
-			radio.setAttribute("id", "hrs_radio");
-			radio.text = hrs[i];
-			div.add(radio);
+	$.ajax({
+		type: "POST",
+		contentType: "application/json; charset=utf-8",
+		url: "db/dbmanager.php",
+		dataType: "json",
+		data: form_data,
+		success: function (res, textStatus, jqXHR) {
+			var error = res.error;
+			if (error == true) {
+				//alert("Office hours NOT available");
+				displayHrs(res.hrs);
+			}
+			//alert("Availability NOT Found");
+			else {
+				displayHrs(res.hrs);
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			alert(errorThrown);
 		}
-
+	});
 }
 
+
+function displayHrs(hrs) {
+	var div = document.getElementById("select_hrs");
+	//var tm = hrs.split(",");
+	//alert(hrs[1]);
+	var i;
+	for (i = 0; i < hrs.length; i++) {
+		var radio = document.createElement("option");
+		radio.setAttribute("name", "hrs_radio");
+		radio.setAttribute("value", hrs[i]);
+		radio.setAttribute("id", "hrs_radio");
+		radio.text = hrs[i];
+		div.add(radio);
+	}
+
+}
 
 function addRow() {
 	var table = document.getElementById("schedule_table");
@@ -172,7 +169,7 @@ function getAvailibity(id) {
 		url: "db/dbmanager.php",
 		dataType: "json",
 		data: form_data,
-		success: function(res, textStatus, jqXHR) {
+		success: function (res, textStatus, jqXHR) {
 			var error = res.error;
 			if (error == true) addRow();
 			//alert("Availability NOT Found");
@@ -180,7 +177,7 @@ function getAvailibity(id) {
 				showAvailability(res.office_hrs);
 			}
 		},
-		error: function(jqXHR, textStatus, errorThrown) {
+		error: function (jqXHR, textStatus, errorThrown) {
 			alert(errorThrown);
 		}
 	});
@@ -212,7 +209,7 @@ function showAvailability(office_hrs) {
 		thursday.length,
 		monday.length
 	];
-	ar.sort(function(a, b) {
+	ar.sort(function (a, b) {
 		return b - a;
 	});
 	var max = ar[0];
@@ -259,17 +256,17 @@ function showAvailability(office_hrs) {
 			//alert(momentObj);
 		} else
 			cell2.innerHTML =
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">" +
-				"<br>" +
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">";
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">" +
+			"<br>" +
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">";
 
 		//Display tuesday office hrs
 		if (tuesday.length > i) {
@@ -295,17 +292,17 @@ function showAvailability(office_hrs) {
 			//alert(momentObj);
 		} else
 			cell3.innerHTML =
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">" +
-				"<br>" +
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">";
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">" +
+			"<br>" +
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">";
 
 		//Display wednesday office hrs
 		if (wednesday.length > i) {
@@ -331,17 +328,17 @@ function showAvailability(office_hrs) {
 			//alert(momentObj);
 		} else
 			cell4.innerHTML =
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">" +
-				"<br>" +
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">";
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">" +
+			"<br>" +
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">";
 
 		//Display thursday office hrs
 		if (thursday.length > i) {
@@ -367,17 +364,17 @@ function showAvailability(office_hrs) {
 			//alert(momentObj);
 		} else
 			cell5.innerHTML =
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">" +
-				"<br>" +
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">";
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">" +
+			"<br>" +
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">";
 
 		//Display friday office hrs
 		if (friday.length > i) {
@@ -403,17 +400,17 @@ function showAvailability(office_hrs) {
 			//alert(momentObj);
 		} else
 			cell6.innerHTML =
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">" +
-				"<br>" +
-				"<input type=" +
-				"time" +
-				" name=" +
-				"schedule_time" +
-				">";
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">" +
+			"<br>" +
+			"<input type=" +
+			"time" +
+			" name=" +
+			"schedule_time" +
+			">";
 	}
 }
 
@@ -430,7 +427,7 @@ function getAppointments(id) {
 		url: "db/dbmanager.php",
 		data: form_data,
 		dataType: "json",
-		success: function(res, textStatus, jqXHR) {
+		success: function (res, textStatus, jqXHR) {
 			var found = res.Found;
 			if (found == false) {
 				alert("No Appointments Found.");
@@ -460,7 +457,7 @@ function getAppointments(id) {
 				}
 			}
 		},
-		error: function(jqXHR, textStatus, errorThrown) {
+		error: function (jqXHR, textStatus, errorThrown) {
 			alert("An error occured. Please try again.");
 			alert(errorThrown);
 		}
@@ -529,7 +526,7 @@ function showAppointments(
 			">Cancel</span>";
 		var id = "view_cancelled" + i;
 		var x = document.getElementById(id);
-		x.addEventListener("click", function() {
+		x.addEventListener("click", function () {
 			cancelAppointment(appointID, cell7, id);
 		});
 	}
@@ -547,7 +544,7 @@ function cancelAppointment(appoinID, cell, cellID) {
 		url: "db/dbmanager.php",
 		dataType: "json",
 		data: form_data,
-		success: function(res, textStatus, jqXHR) {
+		success: function (res, textStatus, jqXHR) {
 			var error = res.error;
 			if (error == true)
 				alert("Appointment was NOT cancelled, please try again!");
@@ -556,7 +553,7 @@ function cancelAppointment(appoinID, cell, cellID) {
 				location.reload();
 			}
 		},
-		error: function(jqXHR, textStatus, errorThrown) {
+		error: function (jqXHR, textStatus, errorThrown) {
 			$("#signupErr").html(errorThrown);
 		}
 	});
@@ -598,7 +595,7 @@ function submitSchedule(id) {
 					schedule["2"] = [];
 					schedule["2"].push(time);
 				}
-			}else{
+			} else {
 				var time = "";
 				schedule["2"] = [];
 				schedule["2"].push(time);
@@ -619,8 +616,7 @@ function submitSchedule(id) {
 					schedule["3"] = [];
 					schedule["3"].push(time);
 				}
-			}
-			else{
+			} else {
 				var time = "";
 				schedule["3"] = [];
 				schedule["3"].push(time);
@@ -641,7 +637,7 @@ function submitSchedule(id) {
 					schedule["4"] = [];
 					schedule["4"].push(time);
 				}
-			}else{
+			} else {
 				var time = "";
 				schedule["4"] = [];
 				schedule["4"].push(time);
@@ -662,7 +658,7 @@ function submitSchedule(id) {
 					schedule["5"] = [];
 					schedule["5"].push(time);
 				}
-			}else{
+			} else {
 				var time = "";
 				schedule["5"] = [];
 				schedule["5"].push(time);
@@ -683,7 +679,7 @@ function submitSchedule(id) {
 					schedule["6"] = [];
 					schedule["6"].push(time);
 				}
-			}else{
+			} else {
 				var time = "";
 				schedule["6"] = [];
 				schedule["6"].push(time);
@@ -703,7 +699,7 @@ function submitSchedule(id) {
 				url: "db/dbmanager.php",
 				dataType: "json",
 				data: form_data,
-				success: function(res, textStatus, jqXHR) {
+				success: function (res, textStatus, jqXHR) {
 					var error = res.error;
 					if (error == true)
 						alert("Availability NOT saved. Please try again.");
@@ -711,7 +707,7 @@ function submitSchedule(id) {
 						alert("Availability was successfully saved!");
 					}
 				},
-				error: function(jqXHR, textStatus, errorThrown) {
+				error: function (jqXHR, textStatus, errorThrown) {
 					$("#signupErr").html(errorThrown);
 					alert(errorThrown);
 				}

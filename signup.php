@@ -104,7 +104,7 @@ if (isset($_POST['email']) && (isset($_POST['password']) == isset($_POST['passwo
                         <div class="reveal-if-active">
                             <input class="require-if-active" type="text" id="room" name="room" data-require-pair="#professor" placeholder="Room Number">
                         </div>
-                        <input type="radio" name="status" id="profstudentessor" value="0">
+                        <input type="radio" name="status" id="student" value="0">
                         <label for="professor">Student</label>
                     </div>
 
